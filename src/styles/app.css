@@ -43,7 +43,7 @@ body {
   min-height: 100vh;
 }
 
-/* ── Frosted Glass Header ── */
+/* ── Frosted Glass Universal Navigation ── */
 .app-nav {
   position: sticky;
   top: 0;
@@ -52,7 +52,7 @@ body {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border-subtle);
-  height: 64px;
+  height: 56px;
 }
 
 .nav-container {
@@ -65,32 +65,29 @@ body {
   padding: 0 24px;
 }
 
-.brand-wrap {
+.nav-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   color: var(--text-primary);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.02em;
 }
 
-.brand-icon {
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: #ffffff;
-  border-radius: 8px;
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #ffffff;
   font-weight: 900;
-  font-size: 18px;
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
-}
-
-.brand-name {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
 }
 
 .brand-pill {
@@ -104,6 +101,31 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+.nav-center-menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+}
+
+@media (max-width: 860px) {
+  .nav-center-menu {
+    display: none;
+  }
+}
+
+.nav-menu-link {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.nav-menu-link:hover {
+  color: var(--text-primary);
 }
 
 .pulse-dot {
@@ -958,55 +980,76 @@ body {
 .tag-active { background: rgba(5, 150, 105, 0.1); color: var(--emerald-dark); }
 .tag-staging { background: rgba(217, 119, 6, 0.1); color: var(--gold); }
 
-/* ── Universal Footer ── */
+/* ── Universal Structured Footer (Matching shrewdhq.in) ── */
 .app-footer {
-  background: #ffffff;
+  background: var(--bg-bento);
   border-top: 1px solid var(--border-subtle);
-  padding: 48px 24px 36px;
+  padding: 64px 24px 36px;
+  font-size: 12px;
+  color: var(--text-secondary);
 }
 
 .footer-inner {
   max-width: 1400px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
 }
 
 .footer-disclaimer {
-  font-size: 12px;
-  color: var(--text-tertiary);
   line-height: 1.6;
-  padding: 16px 20px;
-  background: var(--bg-bento);
-  border-radius: 12px;
-}
-
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-bottom: 24px;
+  padding-bottom: 28px;
   border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 36px;
+  color: var(--text-tertiary);
+  font-size: 11.5px;
 }
 
-.footer-links {
+.footer-disclaimer strong {
+  color: var(--text-secondary);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+@media (max-width: 900px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-col h4 {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.footer-col ul {
+  list-style: none;
   display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.footer-links a {
+.footer-col a {
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 13px;
-  font-weight: 500;
-  transition: color 0.2s ease;
+  transition: color 0.15s ease;
+  font-size: 12px;
 }
 
-.footer-links a:hover {
+.footer-col a:hover {
   color: var(--emerald-dark);
 }
 
@@ -1015,16 +1058,25 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  font-size: 12px;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 11.5px;
   color: var(--text-tertiary);
 }
 
-.aws-tag {
-  background: var(--bg-bento);
-  border: 1px solid var(--border-medium);
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-family: monospace;
-  font-size: 11px;
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-bottom-links a {
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-bottom-links a:hover {
+  color: var(--text-primary);
 }

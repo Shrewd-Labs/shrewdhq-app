@@ -1,14 +1,18 @@
 import * as THREE from 'three';
 
 /**
- * ShrewdHQ Household OS — 3D Architectural Spatial Story Engine
+ * ShrewdHQ — Living 3D Spatial Household Artifact Engine
  * 
- * Visually illustrates the real day-to-day struggles of an Indian home:
- * - Tracking due dates for school, utilities, and EMIs
- * - Evaluating investments (EPF, PPF 5th of month rule, CAS mutual funds)
- * - Personal finance & budgeting (domestic staff, power grid, loan amortization)
- * - Special days in the calendar (Diwali festive sinking funds, vacations, gold)
- * - Transforming from chaos & mental overload into sovereign calm: "ShrewdHQ Has It Covered"
+ * Instead of a generic building, the 3D canvas renders tangible, high-fidelity
+ * artifacts representing the real daily life and wealth of an Indian home:
+ * 
+ * - Stage 0: The Sovereign Household Hub & Shield (Master Balance Sheet)
+ * - Stage 1: The Fee Challan & Smart Toll Tag (School Fees & Highway Tolls)
+ * - Stage 2: The UPI Rupee Token & Verified Receipt (Domestic Staff & Utilities)
+ * - Stage 3: The Debt Freedom Scale & Prepayment Block (Home Loans & EMIs)
+ * - Stage 4: The Celebration Diya & Sovereign Gold Coin (Festive Sinking Funds)
+ * - Stage 5: The Sovereign Triad Compounding Rings (EPF 8.25%, PPF 7.10%, CAS Funds)
+ * - Stage 6: The Master Protected Enclave (24.2 Months Family Runway)
  */
 
 export class Household3DScene {
@@ -22,133 +26,26 @@ export class Household3DScene {
     this.scene = null;
     this.camera = null;
     this.renderer = null;
-    this.raycaster = new THREE.Raycaster();
-    this.mouse = new THREE.Vector2(-1000, -1000);
     this.gyroMouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
 
-    this.beacons = [];
     this.scrollProgress = 0;
     this.stateMode = 'covered'; // 'struggle' or 'covered'
-    this.currentChapterIndex = 0;
-
-    // 7 Storyline Camera Waypoints matching the human Indian home journey
-    this.waypoints = [
-      // 0. The Master Overview (The Invisible Mental Load)
-      {
-        cam: new THREE.Vector3(18, 14, 22),
-        target: new THREE.Vector3(0, 3, 0),
-        sunPos: new THREE.Vector3(15, 25, 20),
-        sunColor: 0xfffaed,
-        sunIntensity: 2.2,
-        ambientColor: 0xe0e7ff,
-        skyBg: '#f8fafc',
-        zone: 'overview',
-        struggleAlert: '⚠️ 14 Scattered Bills, Deadlines & Unverified Portfolios',
-        coveredText: '🛡️ ShrewdHQ Household OS: Unified Sovereign Clarity'
-      },
-      // 1. 07:15 AM: School Fees, Bus Fastag & WhatsApp Challans
-      {
-        cam: new THREE.Vector3(9, 5.5, 12.5),
-        target: new THREE.Vector3(2.5, 2, 5),
-        sunPos: new THREE.Vector3(14, 18, 16),
-        sunColor: 0xffedd5,
-        sunIntensity: 2.4,
-        ambientColor: 0xfef3c7,
-        skyBg: '#fffbeb',
-        zone: 'school',
-        struggleAlert: '🚨 DPS Fee Due Today &bull; Bus Fastag Negative Alert',
-        coveredText: '✅ Challan Auto-Matched &bull; Fastag Replenished'
-      },
-      // 2. 10:30 AM: Domestic Staff Payroll, Society Maintenance & Due Date Anxiety
-      {
-        cam: new THREE.Vector3(6, 6.5, 8.5),
-        target: new THREE.Vector3(-0.5, 2.5, 1.5),
-        sunPos: new THREE.Vector3(6, 24, 10),
-        sunColor: 0xfffae6,
-        sunIntensity: 2.8,
-        ambientColor: 0xecfdf5,
-        skyBg: '#f0fdf4',
-        zone: 'utilities',
-        struggleAlert: '⚠️ Cook/Maid Salary Confusion &bull; Society Late Penalty Warning',
-        coveredText: '✅ UPI AutoPay Active &bull; Zero Late Fees &bull; Shared Ledger'
-      },
-      // 3. 02:00 PM: The Loan EMI Rate Hike & Expiring Insurance Spam
-      {
-        cam: new THREE.Vector3(-8.5, 8.5, 9.5),
-        target: new THREE.Vector3(-1.2, 4.5, 0.5),
-        sunPos: new THREE.Vector3(0, 28, 4),
-        sunColor: 0xffffff,
-        sunIntensity: 3.0,
-        ambientColor: 0xf5f3ff,
-        skyBg: '#fbfbfe',
-        zone: 'loans',
-        struggleAlert: '📈 Home Loan Interest Shock &bull; Car Insurance Expired',
-        coveredText: '✅ Debt Freedom: 2033 &bull; Zero-Broker Policy Renewed'
-      },
-      // 4. 06:30 PM: Special Days in the Calendar & Festive Budgeting
-      {
-        cam: new THREE.Vector3(8.5, 7.5, 13.5),
-        target: new THREE.Vector3(1, 2.2, 3),
-        sunPos: new THREE.Vector3(-12, 14, 8),
-        sunColor: 0xfbbf24,
-        sunIntensity: 2.2,
-        ambientColor: 0xfef08a,
-        skyBg: '#fefce8',
-        zone: 'festive',
-        struggleAlert: '⚠️ Festive Cash Crunch &bull; Jewellery Making Charges Trap',
-        coveredText: '✨ Diwali Sinking Fund Ready &bull; Zero Credit Card Debt'
-      },
-      // 5. 09:00 PM: Evaluating Investments, EPF & The PPF 5th Rule
-      {
-        cam: new THREE.Vector3(-7, 12, 7.5),
-        target: new THREE.Vector3(0, 6, 0),
-        sunPos: new THREE.Vector3(-16, 8, -10),
-        sunColor: 0xf97316,
-        sunIntensity: 1.8,
-        ambientColor: 0x312e81,
-        skyBg: '#f8fafc',
-        zone: 'statutory',
-        struggleAlert: '⚠️ 18 Scattered SIPs &bull; Missed PPF 5th-of-Month Interest',
-        coveredText: '🛡️ EPF 8.25% + PPF Protected &bull; Zero-Scraping CAS Sync'
-      },
-      // 6. 11:00 PM: The Bedtime Resolution: ShrewdHQ Has It All Covered
-      {
-        cam: new THREE.Vector3(13, 14, 18),
-        target: new THREE.Vector3(0, 4.5, 0),
-        sunPos: new THREE.Vector3(2, 20, -12),
-        sunColor: 0xa5b4fc,
-        sunIntensity: 1.5,
-        ambientColor: 0x1e1b4b,
-        skyBg: '#0f172a',
-        zone: 'copilot',
-        struggleAlert: '😓 Bedtime Financial Anxiety &bull; Unspoken Spouse Stress',
-        coveredText: '🌙 24.2 Months Runway &bull; Total Sovereign Harmony'
-      }
-    ];
-
-    this.currentCamPos = this.waypoints[0].cam.clone();
-    this.currentTarget = this.waypoints[0].target.clone();
+    this.stageGroups = [];
 
     this.init();
   }
 
   init() {
-    // 1. Scene & Fog
+    // 1. Scene & Environment
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0xfbfbfd);
-    this.scene.fog = new THREE.FogExp2(0xfbfbfd, 0.018);
+    this.scene.fog = new THREE.FogExp2(0xfbfbfd, 0.022);
 
     // 2. Camera
-    this.camera = new THREE.PerspectiveCamera(
-      38,
-      this.width / this.height,
-      0.1,
-      100
-    );
-    this.camera.position.copy(this.currentCamPos);
-    this.camera.lookAt(this.currentTarget);
+    this.camera = new THREE.PerspectiveCamera(36, this.width / this.height, 0.1, 100);
+    this.camera.position.set(0, 0, 14);
 
-    // 3. Renderer
+    // 3. Renderer with High-DPI & Soft Shadows
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
@@ -159,448 +56,444 @@ export class Household3DScene {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.1;
+    this.renderer.toneMappingExposure = 1.15;
 
     this.container.innerHTML = '';
     this.container.appendChild(this.renderer.domElement);
 
-    // 4. Lights
+    // 4. Studio Lighting
     this.setupLighting();
 
-    // 5. Build Architectural Model with Indian Household Details
-    this.buildModernVilla();
+    // 5. Build the 7 Narrative Artifact Stages
+    this.buildStageArtifacts();
 
-    // 6. Build Interactive Spatial Beacons
-    this.buildBeacons();
-
-    // 7. Event Listeners
+    // 6. Bind User Interaction Events
     this.bindEvents();
 
-    // 8. Animation Loop
+    // 7. Start Render Loop
     this.animate = this.animate.bind(this);
     requestAnimationFrame(this.animate);
   }
 
   setupLighting() {
-    this.ambientLight = new THREE.AmbientLight(0xe2e8f0, 1.2);
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     this.scene.add(this.ambientLight);
 
-    this.dirLight = new THREE.DirectionalLight(0xfffaed, 2.2);
-    this.dirLight.position.set(15, 25, 20);
-    this.dirLight.castShadow = true;
-    this.dirLight.shadow.mapSize.width = 2048;
-    this.dirLight.shadow.mapSize.height = 2048;
-    this.dirLight.shadow.camera.near = 0.5;
-    this.dirLight.shadow.camera.far = 60;
-    this.dirLight.shadow.camera.left = -16;
-    this.dirLight.shadow.camera.right = 16;
-    this.dirLight.shadow.camera.top = 16;
-    this.dirLight.shadow.camera.bottom = -16;
-    this.dirLight.shadow.bias = -0.0005;
-    this.scene.add(this.dirLight);
+    // Key Light
+    this.keyLight = new THREE.DirectionalLight(0xfffaed, 2.5);
+    this.keyLight.position.set(8, 12, 10);
+    this.keyLight.castShadow = true;
+    this.keyLight.shadow.mapSize.width = 1024;
+    this.keyLight.shadow.mapSize.height = 1024;
+    this.keyLight.shadow.bias = -0.001;
+    this.scene.add(this.keyLight);
 
-    // Soft ground bounce light
-    this.hemiLight = new THREE.HemisphereLight(0xffffff, 0xd1d5db, 0.6);
-    this.scene.add(this.hemiLight);
+    // Fill Light
+    this.fillLight = new THREE.DirectionalLight(0xdbeafe, 1.2);
+    this.fillLight.position.set(-10, 6, 8);
+    this.scene.add(this.fillLight);
 
-    // Study financial monitor point light
-    this.studyPointLight = new THREE.PointLight(0x38bdf8, 2, 8);
-    this.studyPointLight.position.set(-1, 5.5, 0);
-    this.scene.add(this.studyPointLight);
-
-    // Living/kitchen warm domestic light
-    this.livingPointLight = new THREE.PointLight(0xfef08a, 1.8, 10);
-    this.livingPointLight.position.set(0, 2.2, 1);
-    this.scene.add(this.livingPointLight);
-
-    // Rooftop Sovereign KMS Vault Emerald Light
-    this.vaultPointLight = new THREE.PointLight(0x10b981, 2.5, 8);
-    this.vaultPointLight.position.set(0, 6.8, 0);
-    this.scene.add(this.vaultPointLight);
-
-    // Festive Diya warm lantern point light
-    this.festivePointLight = new THREE.PointLight(0xf59e0b, 2.0, 9);
-    this.festivePointLight.position.set(2, 2.4, 3.5);
-    this.scene.add(this.festivePointLight);
+    // Rim/Accent Light (Emerald glow)
+    this.rimLight = new THREE.PointLight(0x059669, 2.5, 16);
+    this.rimLight.position.set(0, -4, 6);
+    this.scene.add(this.rimLight);
   }
 
-  buildModernVilla() {
-    this.villaGroup = new THREE.Group();
-
-    // Standard high-end architectural materials
-    const concreteMat = new THREE.MeshStandardMaterial({
-      color: 0xf1f5f9,
-      roughness: 0.35,
-      metalness: 0.05
-    });
-
+  buildStageArtifacts() {
+    // ── Shared Materials ─────────────────────────────────────────────────────
     const obsidianMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b,
-      roughness: 0.25,
-      metalness: 0.2
+      color: 0x111827,
+      roughness: 0.2,
+      metalness: 0.8
     });
 
-    const glassMat = new THREE.MeshPhysicalMaterial({
-      color: 0x93c5fd,
-      transmission: 0.85,
-      opacity: 1,
-      transparent: true,
-      roughness: 0.1,
-      ior: 1.5,
-      thickness: 0.5
-    });
-
-    const warmWoodMat = new THREE.MeshStandardMaterial({
-      color: 0xb45309,
-      roughness: 0.5
+    const brushedGoldMat = new THREE.MeshStandardMaterial({
+      color: 0xd97706,
+      roughness: 0.3,
+      metalness: 0.85
     });
 
     const emeraldGlowMat = new THREE.MeshStandardMaterial({
       color: 0x059669,
       emissive: 0x10b981,
-      emissiveIntensity: 0.6,
+      emissiveIntensity: 0.5,
       roughness: 0.2
     });
 
-    // 1. Ground Podium & Landscaped Terrace
-    const groundGeo = new THREE.BoxGeometry(28, 0.4, 24);
-    const groundMat = new THREE.MeshStandardMaterial({
-      color: 0xe2e8f0,
-      roughness: 0.6
-    });
-    const ground = new THREE.Mesh(groundGeo, groundMat);
-    ground.position.y = -0.2;
-    ground.receiveShadow = true;
-    this.villaGroup.add(ground);
-
-    // Lawn area
-    const lawnGeo = new THREE.BoxGeometry(26, 0.05, 7);
-    const lawnMat = new THREE.MeshStandardMaterial({
-      color: 0xdcfce7,
-      roughness: 0.8
-    });
-    const lawn = new THREE.Mesh(lawnGeo, lawnMat);
-    lawn.position.set(0, 0.03, 7.5);
-    lawn.receiveShadow = true;
-    this.villaGroup.add(lawn);
-
-    // Driveway & Entrance Walkway
-    const pathGeo = new THREE.BoxGeometry(4, 0.08, 10);
-    const pathMat = new THREE.MeshStandardMaterial({
-      color: 0xcfd8dc,
-      roughness: 0.4
-    });
-    const path = new THREE.Mesh(pathGeo, pathMat);
-    path.position.set(3, 0.05, 6);
-    path.receiveShadow = true;
-    this.villaGroup.add(path);
-
-    // 2. Ground Level: Living & Domestic Staff Pavilion
-    const gFloorGeo = new THREE.BoxGeometry(14, 0.3, 10);
-    const gFloor = new THREE.Mesh(gFloorGeo, concreteMat);
-    gFloor.position.set(-1, 0.15, 0);
-    gFloor.receiveShadow = true;
-    this.villaGroup.add(gFloor);
-
-    // Glass walls for Ground Floor
-    const gGlassGeo = new THREE.BoxGeometry(13.6, 2.8, 9.6);
-    const gGlass = new THREE.Mesh(gGlassGeo, glassMat);
-    gGlass.position.set(-1, 1.6, 0);
-    this.villaGroup.add(gGlass);
-
-    // Architectural Support Columns
-    const colGeo = new THREE.CylinderGeometry(0.18, 0.18, 3, 16);
-    const colPositions = [
-      [-7.5, 1.5, 4.5], [-7.5, 1.5, -4.5],
-      [5.5, 1.5, 4.5], [5.5, 1.5, -4.5],
-      [-1, 1.5, 4.8]
-    ];
-    colPositions.forEach(([x, y, z]) => {
-      const col = new THREE.Mesh(colGeo, obsidianMat);
-      col.position.set(x, y, z);
-      col.castShadow = true;
-      col.receiveShadow = true;
-      this.villaGroup.add(col);
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      transmission: 0.9,
+      opacity: 1,
+      transparent: true,
+      roughness: 0.1,
+      ior: 1.52,
+      thickness: 0.8
     });
 
-    // 3. Level 1: Slab & Financial Study (Home Workspace)
-    const midSlabGeo = new THREE.BoxGeometry(16, 0.4, 11);
-    const midSlab = new THREE.Mesh(midSlabGeo, concreteMat);
-    midSlab.position.set(-0.5, 3.2, 0);
-    midSlab.castShadow = true;
-    midSlab.receiveShadow = true;
-    this.villaGroup.add(midSlab);
+    const paperMat = new THREE.MeshStandardMaterial({
+      color: 0xfdfdfd,
+      roughness: 0.6,
+      metalness: 0.05
+    });
 
-    // Level 1 Cantilever Study Room
-    const studyGeo = new THREE.BoxGeometry(9, 2.6, 8);
-    const study = new THREE.Mesh(studyGeo, concreteMat);
-    study.position.set(-3.5, 4.7, 0.5);
-    study.castShadow = true;
-    study.receiveShadow = true;
-    this.villaGroup.add(study);
+    // ── STAGE 0: The Sovereign Household Hub & Shield ───────────────────────
+    const stage0 = new THREE.Group();
+    stage0.name = 'stage-0-hub';
 
-    // Study Glass Front
-    const studyGlassGeo = new THREE.BoxGeometry(8.6, 2.3, 0.1);
-    const studyGlass = new THREE.Mesh(studyGlassGeo, glassMat);
-    studyGlass.position.set(-3.5, 4.7, 4.55);
-    this.villaGroup.add(studyGlass);
+    // Central Glass Shield
+    const shieldShape = new THREE.Shape();
+    shieldShape.moveTo(0, 2.8);
+    shieldShape.quadraticCurveTo(2.4, 2.4, 2.2, 0.4);
+    shieldShape.quadraticCurveTo(2.0, -1.8, 0, -3.0);
+    shieldShape.quadraticCurveTo(-2.0, -1.8, -2.2, 0.4);
+    shieldShape.quadraticCurveTo(-2.4, 2.4, 0, 2.8);
 
-    // Glowing Study Workstations (Home Loan & Investment Terminal)
-    const deskGeo = new THREE.BoxGeometry(3, 0.1, 1.2);
-    const desk = new THREE.Mesh(deskGeo, warmWoodMat);
-    desk.position.set(-3.5, 4.2, 2.5);
-    this.villaGroup.add(desk);
+    const extrudeSettings = { depth: 0.25, bevelEnabled: true, bevelSegments: 4, steps: 1, bevelSize: 0.08, bevelThickness: 0.08 };
+    const shieldGeo = new THREE.ExtrudeGeometry(shieldShape, extrudeSettings);
+    shieldGeo.center();
+    const shieldMesh = new THREE.Mesh(shieldGeo, glassMat);
+    stage0.add(shieldMesh);
 
-    const screenGeo = new THREE.BoxGeometry(1.4, 0.7, 0.05);
-    const screenMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-    const screen = new THREE.Mesh(screenGeo, screenMat);
-    screen.position.set(-3.5, 4.7, 2.5);
-    this.villaGroup.add(screen);
+    // Golden "S" Emblem in Center of Shield
+    const emblemGeo = new THREE.TorusGeometry(0.9, 0.12, 16, 48);
+    const emblemMesh = new THREE.Mesh(emblemGeo, brushedGoldMat);
+    emblemMesh.position.z = 0.2;
+    stage0.add(emblemMesh);
 
-    // 4. Level 2: Rooftop Sanctuary & Sovereign KMS Vault Core
-    const roofSlabGeo = new THREE.BoxGeometry(12, 0.35, 9);
-    const roofSlab = new THREE.Mesh(roofSlabGeo, concreteMat);
-    roofSlab.position.set(-1.5, 6.2, 0);
-    roofSlab.castShadow = true;
-    roofSlab.receiveShadow = true;
-    this.villaGroup.add(roofSlab);
+    // Orbiting Household Data Rings
+    const ringGeo = new THREE.RingGeometry(3.6, 3.65, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.6 });
+    const orbitRing1 = new THREE.Mesh(ringGeo, ringMat);
+    orbitRing1.rotation.x = Math.PI / 3;
+    stage0.add(orbitRing1);
+    this.stage0OrbitRing = orbitRing1;
 
-    // Sovereign Encrypted Core Tower
-    const vaultCoreGeo = new THREE.BoxGeometry(3.5, 2.2, 3.5);
-    const vaultCore = new THREE.Mesh(vaultCoreGeo, obsidianMat);
-    vaultCore.position.set(-0.5, 7.5, -0.5);
-    vaultCore.castShadow = true;
-    this.villaGroup.add(vaultCore);
+    this.scene.add(stage0);
+    this.stageGroups.push(stage0);
 
-    // Emerald Vault Core Indicator Band
-    const bandGeo = new THREE.BoxGeometry(3.6, 0.3, 3.6);
-    const band = new THREE.Mesh(bandGeo, emeraldGlowMat);
-    band.position.set(-0.5, 7.5, -0.5);
-    this.villaGroup.add(band);
+    // ── STAGE 1: School Fee Challan & Smart Toll Card (Fastag) ──────────────
+    const stage1 = new THREE.Group();
+    stage1.name = 'stage-1-school';
 
-    // Modern Solar Pergola (Clean Energy & Roof Deck)
-    const pergolaBeamGeo = new THREE.BoxGeometry(10, 0.12, 0.2);
-    for (let i = -3; i <= 3; i += 1) {
-      const beam = new THREE.Mesh(pergolaBeamGeo, obsidianMat);
-      beam.position.set(-2, 8.8, i * 0.9);
-      beam.castShadow = true;
-      this.villaGroup.add(beam);
+    // Floating School Challan Document
+    const docGeo = new THREE.BoxGeometry(3.6, 4.6, 0.06);
+    const docMesh = new THREE.Mesh(docGeo, paperMat);
+    docMesh.position.set(-0.8, 0.4, 0);
+    docMesh.rotation.z = 0.08;
+    stage1.add(docMesh);
+
+    // Printed Text Line Skeletons on Challan
+    for (let i = 0; i < 5; i++) {
+      const lineGeo = new THREE.BoxGeometry(2.4, 0.1, 0.01);
+      const lineMat = new THREE.MeshBasicMaterial({ color: 0xd1d5db });
+      const line = new THREE.Mesh(lineGeo, lineMat);
+      line.position.set(-0.8, 1.4 - i * 0.4, 0.04);
+      line.rotation.z = 0.08;
+      stage1.add(line);
     }
 
-    // 5. Right Wing: Modern Carport & Fleet Garage
-    const carportRoofGeo = new THREE.BoxGeometry(7, 0.3, 8);
-    const carportRoof = new THREE.Mesh(carportRoofGeo, concreteMat);
-    carportRoof.position.set(7.5, 2.8, -0.5);
-    carportRoof.castShadow = true;
-    carportRoof.receiveShadow = true;
-    this.villaGroup.add(carportRoof);
-
-    // Carport Pillar
-    const cpPillarGeo = new THREE.BoxGeometry(0.3, 2.8, 0.3);
-    const cpPillar = new THREE.Mesh(cpPillarGeo, obsidianMat);
-    cpPillar.position.set(10.5, 1.4, 3);
-    cpPillar.castShadow = true;
-    this.villaGroup.add(cpPillar);
-
-    // Miniature Modern EV Car
-    const carGroup = new THREE.Group();
-    const carBodyGeo = new THREE.BoxGeometry(3.6, 0.9, 1.8);
-    const carBodyMat = new THREE.MeshStandardMaterial({
-      color: 0x0f172a,
-      roughness: 0.15,
-      metalness: 0.8
-    });
-    const carBody = new THREE.Mesh(carBodyGeo, carBodyMat);
-    carBody.position.set(0, 0.6, 0);
-    carBody.castShadow = true;
-    carGroup.add(carBody);
-
-    const carCabinGeo = new THREE.BoxGeometry(2, 0.65, 1.5);
-    const carCabin = new THREE.Mesh(carCabinGeo, glassMat);
-    carCabin.position.set(-0.2, 1.25, 0);
-    carGroup.add(carCabin);
-
-    // Headlights
-    const lightGeo = new THREE.BoxGeometry(0.1, 0.15, 0.4);
-    const lightMat = new THREE.MeshBasicMaterial({ color: 0x67e8f9 });
-    const hlLeft = new THREE.Mesh(lightGeo, lightMat);
-    hlLeft.position.set(1.8, 0.6, 0.6);
-    const hlRight = new THREE.Mesh(lightGeo, lightMat);
-    hlRight.position.set(1.8, 0.6, -0.6);
-    carGroup.add(hlLeft, hlRight);
-
-    carGroup.position.set(7.5, 0, 0);
-    this.villaGroup.add(carGroup);
-
-    // Miniature School Van at Entrance Gate
-    const schoolVanGroup = new THREE.Group();
-    const vanBodyGeo = new THREE.BoxGeometry(2.8, 1.2, 1.4);
-    const vanBodyMat = new THREE.MeshStandardMaterial({
-      color: 0xf59e0b, // Indian school bus yellow
+    // Dynamic Verification Seal / Stamp on Challan
+    const stampGeo = new THREE.CylinderGeometry(0.7, 0.7, 0.08, 32);
+    this.challanStampMat = new THREE.MeshStandardMaterial({
+      color: 0x059669,
+      emissive: 0x10b981,
+      emissiveIntensity: 0.4,
       roughness: 0.3
     });
-    const vanBody = new THREE.Mesh(vanBodyGeo, vanBodyMat);
-    vanBody.position.set(0, 0.7, 0);
-    vanBody.castShadow = true;
-    schoolVanGroup.add(vanBody);
+    const stampMesh = new THREE.Mesh(stampGeo, this.challanStampMat);
+    stampMesh.position.set(-0.2, -0.6, 0.08);
+    stampMesh.rotation.x = Math.PI / 2;
+    stage1.add(stampMesh);
+    this.stage1Stamp = stampMesh;
 
-    const vanGlassGeo = new THREE.BoxGeometry(1.6, 0.4, 1.42);
-    const vanGlass = new THREE.Mesh(vanGlassGeo, glassMat);
-    vanGlass.position.set(0.2, 0.9, 0);
-    schoolVanGroup.add(vanGlass);
+    // Smart Toll NFC Card (Fastag)
+    const cardGeo = new THREE.BoxGeometry(3.2, 2.0, 0.08);
+    const cardMat = new THREE.MeshStandardMaterial({ color: 0x1e3a8a, metalness: 0.5, roughness: 0.3 });
+    const fastagCard = new THREE.Mesh(cardGeo, cardMat);
+    fastagCard.position.set(1.4, -0.8, 0.8);
+    fastagCard.rotation.y = -0.25;
+    fastagCard.rotation.z = -0.12;
+    stage1.add(fastagCard);
 
-    schoolVanGroup.position.set(3, 0, 8.5);
-    schoolVanGroup.rotation.y = -Math.PI / 4;
-    this.villaGroup.add(schoolVanGroup);
+    // Smart Card Chip
+    const chipGeo = new THREE.BoxGeometry(0.6, 0.45, 0.02);
+    const chipMesh = new THREE.Mesh(chipGeo, brushedGoldMat);
+    chipMesh.position.set(0.6, -0.8, 0.86);
+    chipMesh.rotation.y = -0.25;
+    chipMesh.rotation.z = -0.12;
+    stage1.add(chipMesh);
 
-    // 6. Festive Courtyard / Veranda with Celebration Diyas
-    const verandaGeo = new THREE.BoxGeometry(6, 0.15, 4);
-    const veranda = new THREE.Mesh(verandaGeo, warmWoodMat);
-    veranda.position.set(1.5, 0.25, 3.5);
-    veranda.receiveShadow = true;
-    this.villaGroup.add(veranda);
+    // NFC Radio Wave Rings
+    const nfcRingGeo = new THREE.RingGeometry(0.5, 0.58, 32);
+    this.nfcRingMat = new THREE.MeshBasicMaterial({ color: 0x10b981, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+    const nfcRing = new THREE.Mesh(nfcRingGeo, this.nfcRingMat);
+    nfcRing.position.set(1.4, -0.8, 0.9);
+    stage1.add(nfcRing);
+    this.stage1NfcRing = nfcRing;
 
-    // Diya golden lights on veranda edge
-    const diyaGeo = new THREE.CylinderGeometry(0.15, 0.1, 0.1, 12);
-    const diyaMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4 });
-    const flameMat = new THREE.MeshBasicMaterial({ color: 0xffedd5 });
+    stage1.visible = false;
+    this.scene.add(stage1);
+    this.stageGroups.push(stage1);
 
-    [[-0.8, 0.35, 4.8], [1.2, 0.35, 4.8], [3.2, 0.35, 4.8]].forEach(([x, y, z]) => {
-      const diya = new THREE.Mesh(diyaGeo, diyaMat);
-      diya.position.set(x, y, z);
-      const flame = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), flameMat);
-      flame.position.set(x, y + 0.12, z);
-      this.villaGroup.add(diya);
-      this.villaGroup.add(flame);
+    // ── STAGE 2: The UPI Rupee Token & Verified Receipt ─────────────────────
+    const stage2 = new THREE.Group();
+    stage2.name = 'stage-2-staff';
+
+    // 3D Rupee Token / Medallion
+    const coinGeo = new THREE.CylinderGeometry(1.5, 1.5, 0.22, 48);
+    const coinMat = new THREE.MeshStandardMaterial({
+      color: 0x059669,
+      emissive: 0x047857,
+      emissiveIntensity: 0.2,
+      metalness: 0.7,
+      roughness: 0.2
     });
+    const coinMesh = new THREE.Mesh(coinGeo, coinMat);
+    coinMesh.rotation.x = Math.PI / 2.5;
+    coinMesh.position.set(-1.2, 0.2, 0.5);
+    stage2.add(coinMesh);
+    this.stage2Coin = coinMesh;
 
-    // 7. Protective Sovereign Household Shield Aura (activated in Chapter 6)
-    const shieldGeo = new THREE.SphereGeometry(18, 32, 24);
-    const shieldMat = new THREE.MeshPhysicalMaterial({
+    // Outer coin golden rim
+    const coinRimGeo = new THREE.TorusGeometry(1.5, 0.08, 16, 48);
+    const coinRim = new THREE.Mesh(coinRimGeo, brushedGoldMat);
+    coinRim.rotation.x = Math.PI / 2.5;
+    coinRim.position.set(-1.2, 0.2, 0.5);
+    stage2.add(coinRim);
+
+    // Verified Digital Mandate Envelope / Receipt
+    const envGeo = new THREE.BoxGeometry(4.2, 2.8, 0.15);
+    const envMesh = new THREE.Mesh(envGeo, paperMat);
+    envMesh.position.set(1.0, -0.4, 0);
+    envMesh.rotation.y = -0.15;
+    stage2.add(envMesh);
+
+    // Checkmark Badge on Envelope
+    const checkBadgeGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 24);
+    this.stage2BadgeMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.3 });
+    const checkBadge = new THREE.Mesh(checkBadgeGeo, this.stage2BadgeMat);
+    checkBadge.position.set(2.4, 0.6, 0.15);
+    checkBadge.rotation.x = Math.PI / 2;
+    stage2.add(checkBadge);
+
+    stage2.visible = false;
+    this.scene.add(stage2);
+    this.stageGroups.push(stage2);
+
+    // ── STAGE 3: The Debt Freedom Scale & Prepayment Block ──────────────────
+    const stage3 = new THREE.Group();
+    stage3.name = 'stage-3-debt';
+
+    // Balance Scale Base & Pillar
+    const baseGeo = new THREE.CylinderGeometry(1.4, 1.6, 0.3, 32);
+    const baseMesh = new THREE.Mesh(baseGeo, obsidianMat);
+    baseMesh.position.set(0, -2.5, 0);
+    stage3.add(baseMesh);
+
+    const pillarGeo = new THREE.CylinderGeometry(0.14, 0.14, 4.2, 16);
+    const pillarMesh = new THREE.Mesh(pillarGeo, brushedGoldMat);
+    pillarMesh.position.set(0, -0.5, 0);
+    stage3.add(pillarMesh);
+
+    // Balance Scale Beam (Tilts dynamically based on prepayments)
+    const beamGeo = new THREE.BoxGeometry(5.4, 0.16, 0.25);
+    this.stage3Beam = new THREE.Mesh(beamGeo, brushedGoldMat);
+    this.stage3Beam.position.set(0, 1.4, 0);
+    stage3.add(this.stage3Beam);
+
+    // Left Pan: Bank Interest Weight (Struggle)
+    const panGeo = new THREE.CylinderGeometry(1.0, 0.8, 0.2, 24);
+    const leftPan = new THREE.Mesh(panGeo, obsidianMat);
+    leftPan.position.set(-2.2, 0.4, 0);
+    this.stage3LeftPan = leftPan;
+    stage3.add(leftPan);
+
+    // Right Pan: Prepayment Freedom Gold Block (Covered)
+    const rightPan = new THREE.Mesh(panGeo, obsidianMat);
+    rightPan.position.set(2.2, 0.4, 0);
+    this.stage3RightPan = rightPan;
+    stage3.add(rightPan);
+
+    // Gold Ingot Block sitting on right pan
+    const goldIngotGeo = new THREE.BoxGeometry(1.2, 0.6, 0.8);
+    const goldIngot = new THREE.Mesh(goldIngotGeo, brushedGoldMat);
+    goldIngot.position.set(2.2, 0.8, 0);
+    this.stage3Ingot = goldIngot;
+    stage3.add(goldIngot);
+
+    stage3.visible = false;
+    this.scene.add(stage3);
+    this.stageGroups.push(stage3);
+
+    // ── STAGE 4: The Celebration Diya & Sovereign Gold Coin ─────────────────
+    const stage4 = new THREE.Group();
+    stage4.name = 'stage-4-festive';
+
+    // Traditional Brass Diya Base
+    const diyaBaseGeo = new THREE.CylinderGeometry(1.8, 0.6, 0.6, 32);
+    const diyaMesh = new THREE.Mesh(diyaBaseGeo, brushedGoldMat);
+    diyaMesh.position.set(-1.2, -0.6, 0);
+    stage4.add(diyaMesh);
+
+    // Diya Oil Bowl Interior
+    const bowlGeo = new THREE.CylinderGeometry(1.6, 1.4, 0.3, 32);
+    const bowlMesh = new THREE.Mesh(bowlGeo, obsidianMat);
+    bowlMesh.position.set(-1.2, -0.35, 0);
+    stage4.add(bowlMesh);
+
+    // Glowing Flame (Pulsates in animation loop)
+    const flameGeo = new THREE.ConeGeometry(0.35, 0.9, 16);
+    this.flameMat = new THREE.MeshBasicMaterial({ color: 0xffedd5 });
+    const flameMesh = new THREE.Mesh(flameGeo, this.flameMat);
+    flameMesh.position.set(-1.2, 0.25, 0);
+    stage4.add(flameMesh);
+    this.stage4Flame = flameMesh;
+
+    // Warm Ambient Flame Light
+    this.flameLight = new THREE.PointLight(0xf59e0b, 3.5, 8);
+    this.flameLight.position.set(-1.2, 0.4, 0);
+    stage4.add(this.flameLight);
+
+    // Sovereign Gold Coin (24 Karat Hallmark Coin)
+    const goldCoinGeo = new THREE.CylinderGeometry(1.4, 1.4, 0.2, 48);
+    const goldCoin = new THREE.Mesh(goldCoinGeo, brushedGoldMat);
+    goldCoin.position.set(1.4, 0.2, 0.4);
+    goldCoin.rotation.x = Math.PI / 3;
+    stage4.add(goldCoin);
+    this.stage4GoldCoin = goldCoin;
+
+    // Sinking Fund Pedestal
+    const pedestalGeo = new THREE.CylinderGeometry(1.8, 2.0, 0.5, 32);
+    const pedestalMesh = new THREE.Mesh(pedestalGeo, obsidianMat);
+    pedestalMesh.position.set(1.4, -0.8, 0.4);
+    stage4.add(pedestalMesh);
+
+    stage4.visible = false;
+    this.scene.add(stage4);
+    this.stageGroups.push(stage4);
+
+    // ── STAGE 5: The Sovereign Triad Compounding Rings ───────────────────────
+    const stage5 = new THREE.Group();
+    stage5.name = 'stage-5-invest';
+
+    // Ring 1: EPF 8.25% Sovereign Yield (Outer Brass Ring)
+    const epfRingGeo = new THREE.TorusGeometry(2.8, 0.12, 16, 64);
+    const epfRing = new THREE.Mesh(epfRingGeo, brushedGoldMat);
+    stage5.add(epfRing);
+    this.stage5EpfRing = epfRing;
+
+    // Ring 2: PPF 7.10% Sovereign Tax-Free (Middle Emerald Ring)
+    const ppfRingGeo = new THREE.TorusGeometry(2.1, 0.12, 16, 64);
+    const ppfRing = new THREE.Mesh(ppfRingGeo, emeraldGlowMat);
+    ppfRing.rotation.x = Math.PI / 4;
+    stage5.add(ppfRing);
+    this.stage5PpfRing = ppfRing;
+
+    // Ring 3: Mutual Funds & Equity (Inner Titanium Ring)
+    const mfRingGeo = new THREE.TorusGeometry(1.4, 0.12, 16, 64);
+    const mfRing = new THREE.Mesh(mfRingGeo, obsidianMat);
+    mfRing.rotation.y = Math.PI / 3;
+    stage5.add(mfRing);
+    this.stage5MfRing = mfRing;
+
+    // Central 5th-of-the-Month Lock Core (Clicks shut when interest is locked)
+    const lockCoreGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.4, 32);
+    this.stage5LockMat = new THREE.MeshStandardMaterial({
       color: 0x10b981,
+      emissive: 0x059669,
+      emissiveIntensity: 0.6,
+      roughness: 0.2
+    });
+    const lockCore = new THREE.Mesh(lockCoreGeo, this.stage5LockMat);
+    lockCore.rotation.x = Math.PI / 2;
+    stage5.add(lockCore);
+    this.stage5LockCore = lockCore;
+
+    stage5.visible = false;
+    this.scene.add(stage5);
+    this.stageGroups.push(stage5);
+
+    // ── STAGE 6: The Master Protected Enclave (24.2 Mo Runway) ──────────────
+    const stage6 = new THREE.Group();
+    stage6.name = 'stage-6-protected';
+
+    // Central Emerald Monolith
+    const monolithGeo = new THREE.BoxGeometry(2.4, 4.4, 0.8);
+    const monolithMat = new THREE.MeshPhysicalMaterial({
+      color: 0x047857,
+      transmission: 0.6,
+      opacity: 0.95,
       transparent: true,
-      opacity: 0.04,
-      roughness: 0.2,
-      transmission: 0.9,
-      side: THREE.BackSide
+      roughness: 0.15,
+      metalness: 0.2
     });
-    this.shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
-    this.shieldMesh.position.set(0, 5, 0);
-    this.villaGroup.add(this.shieldMesh);
+    const monolith = new THREE.Mesh(monolithGeo, monolithMat);
+    stage6.add(monolith);
 
-    this.scene.add(this.villaGroup);
-  }
+    // Golden Halo Ring crowning the monolith
+    const haloGeo = new THREE.TorusGeometry(2.0, 0.08, 16, 64);
+    const halo = new THREE.Mesh(haloGeo, brushedGoldMat);
+    halo.position.set(0, 2.4, 0);
+    halo.rotation.x = Math.PI / 2;
+    stage6.add(halo);
 
-  buildBeacons() {
-    this.beaconDefs = [
-      {
-        id: 'beacon-school',
-        zone: 'school',
-        pos: new THREE.Vector3(3, 2.2, 8.5),
-        colorStruggle: 0xef4444, // Red struggle
-        colorCovered: 0x10b981,  // Emerald covered
-        label: 'DPS School & Fastag',
-        struggleDesc: 'Due Date Passed / Fastag Low',
-        coveredDesc: 'Auto-Matched & Replenished'
-      },
-      {
-        id: 'beacon-utilities',
-        zone: 'utilities',
-        pos: new THREE.Vector3(-0.5, 3.2, 1.5),
-        colorStruggle: 0xf59e0b, // Amber struggle
-        colorCovered: 0x059669,  // Emerald covered
-        label: 'Domestic Staff & Society',
-        struggleDesc: 'Whose Turn to Pay? Late Penalty Risk',
-        coveredDesc: 'UPI AutoPay 1st of Month'
-      },
-      {
-        id: 'beacon-loans',
-        zone: 'loans',
-        pos: new THREE.Vector3(-3.5, 6.2, 3.5),
-        colorStruggle: 0xef4444, // Red struggle
-        colorCovered: 0x7c3aed,  // Purple alpha covered
-        label: 'SBI Home Loan & EMI',
-        struggleDesc: 'Rate Hike Added 4 Yrs to Loan',
-        coveredDesc: 'Prepayment Slashes 3.4 Yrs (2033)'
-      },
-      {
-        id: 'beacon-festive',
-        zone: 'festive',
-        pos: new THREE.Vector3(1.5, 2.6, 3.5),
-        colorStruggle: 0xf59e0b, // Amber struggle
-        colorCovered: 0xd97706,  // Gold covered
-        label: 'Festive & Calendar Milestones',
-        struggleDesc: 'Lump-Sum Squeeze on Savings',
-        coveredDesc: 'Monthly Sinking Fund: 100% Ready'
-      },
-      {
-        id: 'beacon-statutory',
-        zone: 'statutory',
-        pos: new THREE.Vector3(-0.5, 9, -0.5),
-        colorStruggle: 0xef4444, // Red struggle
-        colorCovered: 0x059669,  // Emerald covered
-        label: 'Sovereign EPF & PPF 5th Rule',
-        struggleDesc: 'Missed 5th-of-Month Compounding',
-        coveredDesc: 'Compounding Alert: Full Interest Locked'
-      },
-      {
-        id: 'beacon-copilot',
-        zone: 'copilot',
-        pos: new THREE.Vector3(-2, 10.2, 0),
-        colorStruggle: 0x64748b, // Slate struggle
-        colorCovered: 0x10b981,  // Emerald covered
-        label: 'AI Household Copilot',
-        struggleDesc: 'Spouse Financial Arguments',
-        coveredDesc: '24.2 Months Runway & Harmony'
-      }
-    ];
-
-    const ringGeo = new THREE.RingGeometry(0.35, 0.48, 32);
-    ringGeo.rotateX(-Math.PI / 2);
-
-    this.beaconDefs.forEach((def, index) => {
-      const beaconGroup = new THREE.Group();
-      beaconGroup.position.copy(def.pos);
-      beaconGroup.userData = { ...def, index };
-
-      const activeColor = this.stateMode === 'struggle' ? def.colorStruggle : def.colorCovered;
-
-      // Core pulsing sphere
-      const sphereGeo = new THREE.SphereGeometry(0.24, 16, 16);
-      const sphereMat = new THREE.MeshBasicMaterial({ color: activeColor });
-      const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-      beaconGroup.add(sphere);
-
-      // Expanding pulse ring
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: activeColor,
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.7
-      });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      beaconGroup.add(ring);
-
-      this.scene.add(beaconGroup);
-      this.beacons.push({ def, group: beaconGroup, sphere, ring });
+    // Protective Sovereign Geodesic Sphere Aura
+    const domeGeo = new THREE.IcosahedronGeometry(4.2, 2);
+    const domeMat = new THREE.MeshBasicMaterial({
+      color: 0x10b981,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.35
     });
+    const dome = new THREE.Mesh(domeGeo, domeMat);
+    stage6.add(dome);
+    this.stage6Dome = dome;
+
+    stage6.visible = false;
+    this.scene.add(stage6);
+    this.stageGroups.push(stage6);
   }
 
   setStateMode(mode) {
     this.stateMode = mode; // 'struggle' or 'covered'
 
-    // Update beacon colors
-    this.beacons.forEach((b) => {
-      const targetColor = mode === 'struggle' ? b.def.colorStruggle : b.def.colorCovered;
-      b.sphere.material.color.setHex(targetColor);
-      b.ring.material.color.setHex(targetColor);
-    });
-
-    // Update shield intensity
-    if (this.shieldMesh) {
-      this.shieldMesh.material.opacity = mode === 'covered' ? 0.08 : 0.01;
-      this.shieldMesh.material.color.setHex(mode === 'covered' ? 0x10b981 : 0xf87171);
+    // Update Stage 1 Stamp & NFC Color
+    if (this.challanStampMat) {
+      this.challanStampMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x059669);
+      this.challanStampMat.emissive.setHex(mode === 'struggle' ? 0xb91c1c : 0x10b981);
     }
+    if (this.nfcRingMat) {
+      this.nfcRingMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x10b981);
+    }
+
+    // Update Stage 2 Badge Color
+    if (this.stage2BadgeMat) {
+      this.stage2BadgeMat.color.setHex(mode === 'struggle' ? 0xf59e0b : 0x10b981);
+    }
+
+    // Update Stage 3 Scale Tilt: Struggle tilts toward heavy interest; Covered tips toward gold freedom!
+    if (this.stage3Beam) {
+      const targetTilt = mode === 'struggle' ? 0.22 : -0.22;
+      this.stage3Beam.rotation.z = targetTilt;
+      if (this.stage3LeftPan) this.stage3LeftPan.position.y = 0.4 - targetTilt * 2.2;
+      if (this.stage3RightPan) this.stage3RightPan.position.y = 0.4 + targetTilt * 2.2;
+      if (this.stage3Ingot) this.stage3Ingot.position.y = 0.8 + targetTilt * 2.2;
+    }
+
+    // Update Stage 5 Lock Core
+    if (this.stage5LockMat) {
+      this.stage5LockMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x10b981);
+      this.stage5LockMat.emissive.setHex(mode === 'struggle' ? 0xb91c1c : 0x059669);
+    }
+
+    // Update Rim Light atmosphere
+    if (this.rimLight) {
+      this.rimLight.color.setHex(mode === 'struggle' ? 0xf87171 : 0x059669);
+    }
+  }
+
+  updateScrollProgress(progress) {
+    this.scrollProgress = Math.max(0, Math.min(progress, 1));
   }
 
   bindEvents() {
@@ -619,42 +512,9 @@ export class Household3DScene {
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = -(e.clientY / window.innerHeight) * 2 + 1;
 
-      this.mouse.x = nx;
-      this.mouse.y = ny;
-
-      this.gyroMouse.targetX = nx * 1.5;
-      this.gyroMouse.targetY = ny * 1.0;
+      this.gyroMouse.targetX = nx * 0.8;
+      this.gyroMouse.targetY = ny * 0.5;
     });
-
-    // Click on 3D beacons
-    this.container.addEventListener('click', (e) => {
-      const rect = this.container.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-      const clickMouse = new THREE.Vector2(x, y);
-      this.raycaster.setFromCamera(clickMouse, this.camera);
-
-      const beaconSpheres = this.beacons.map((b) => b.sphere);
-      const intersects = this.raycaster.intersectObjects(beaconSpheres);
-
-      if (intersects.length > 0) {
-        const clickedBeacon = intersects[0].object.parent;
-        const targetZone = clickedBeacon.userData.zone;
-        this.scrollToZone(targetZone);
-      }
-    });
-  }
-
-  scrollToZone(zoneId) {
-    const targetElement = document.getElementById(`scroll-stage-${zoneId}`);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  updateScrollProgress(progress) {
-    this.scrollProgress = Math.max(0, Math.min(progress, 1));
   }
 
   animate(time) {
@@ -662,86 +522,78 @@ export class Household3DScene {
 
     const t = time * 0.001;
 
-    // 1. Lerp Mouse Gyro Parallax
-    this.gyroMouse.x += (this.gyroMouse.targetX - this.gyroMouse.x) * 0.06;
-    this.gyroMouse.y += (this.gyroMouse.targetY - this.gyroMouse.y) * 0.06;
+    // 1. Mouse Gyro Parallax Lerp
+    this.gyroMouse.x += (this.gyroMouse.targetX - this.gyroMouse.x) * 0.08;
+    this.gyroMouse.y += (this.gyroMouse.targetY - this.gyroMouse.y) * 0.08;
 
-    // 2. Animate Beacons Pulse
-    this.beacons.forEach((b, i) => {
-      const speed = this.stateMode === 'struggle' ? 5.0 : 3.0; // faster urgent pulse in struggle mode
-      const wave = Math.sin(t * speed + i * 1.2);
-      b.sphere.scale.setScalar(1 + wave * 0.16);
-      b.ring.scale.setScalar(1 + (wave + 1) * 0.45);
-      b.ring.material.opacity = Math.max(0, 0.8 - (wave + 1) * 0.35);
+    this.camera.position.x = this.gyroMouse.x;
+    this.camera.position.y = this.gyroMouse.y;
+    this.camera.lookAt(0, 0, 0);
+
+    // 2. Stage Interpolation & Visibility Blending based on Scroll Progress
+    // We have 7 stages (0 to 6).
+    const numStages = this.stageGroups.length;
+    const stageIndexFloat = this.scrollProgress * (numStages - 1);
+    const activeIndex = Math.min(Math.floor(stageIndexFloat), numStages - 1);
+    const nextIndex = Math.min(activeIndex + 1, numStages - 1);
+    const stageAlpha = stageIndexFloat - activeIndex;
+
+    this.stageGroups.forEach((grp, idx) => {
+      if (idx === activeIndex) {
+        grp.visible = true;
+        grp.scale.setScalar(1 - stageAlpha * 0.3);
+        grp.position.y = -stageAlpha * 3.0;
+        grp.rotation.y = this.gyroMouse.x * 0.4 + (1 - stageAlpha) * 0.1;
+      } else if (idx === nextIndex && stageAlpha > 0.01) {
+        grp.visible = true;
+        grp.scale.setScalar(0.7 + stageAlpha * 0.3);
+        grp.position.y = (1 - stageAlpha) * 3.0;
+        grp.rotation.y = this.gyroMouse.x * 0.4 - (1 - stageAlpha) * 0.1;
+      } else {
+        grp.visible = false;
+      }
     });
 
-    // 3. Interpolate Camera along Storyline Waypoints
-    const totalSegments = this.waypoints.length - 1;
-    const scaledProgress = this.scrollProgress * totalSegments;
-    const segmentIndex = Math.floor(scaledProgress);
-    const nextIndex = Math.min(segmentIndex + 1, totalSegments);
-    const segmentAlpha = scaledProgress - segmentIndex;
-
-    const currentWp = this.waypoints[segmentIndex];
-    const nextWp = this.waypoints[nextIndex];
-
-    if (currentWp && nextWp) {
-      this.currentChapterIndex = segmentIndex;
-
-      // Camera position
-      const targetCam = new THREE.Vector3().lerpVectors(currentWp.cam, nextWp.cam, segmentAlpha);
-      targetCam.x += this.gyroMouse.x;
-      targetCam.y += this.gyroMouse.y;
-      this.currentCamPos.lerp(targetCam, 0.08);
-      this.camera.position.copy(this.currentCamPos);
-
-      // Camera target
-      const targetLook = new THREE.Vector3().lerpVectors(currentWp.target, nextWp.target, segmentAlpha);
-      this.currentTarget.lerp(targetLook, 0.08);
-      this.camera.lookAt(this.currentTarget);
-
-      // Sunlight position & color
-      const targetSunPos = new THREE.Vector3().lerpVectors(currentWp.sunPos, nextWp.sunPos, segmentAlpha);
-      this.dirLight.position.copy(targetSunPos);
-
-      const curSunCol = new THREE.Color(currentWp.sunColor);
-      const nextSunCol = new THREE.Color(nextWp.sunColor);
-      this.dirLight.color.lerpColors(curSunCol, nextSunCol, segmentAlpha);
-
-      this.dirLight.intensity = THREE.MathUtils.lerp(
-        currentWp.sunIntensity,
-        nextWp.sunIntensity,
-        segmentAlpha
-      );
-
-      // Ambient light
-      const curAmbCol = new THREE.Color(currentWp.ambientColor);
-      const nextAmbCol = new THREE.Color(nextWp.ambientColor);
-      this.ambientLight.color.lerpColors(curAmbCol, nextAmbCol, segmentAlpha);
-
-      // Update HUD banner on canvas
-      this.updateHudBanner(currentWp, nextWp, segmentAlpha);
+    // 3. Artifact Specific Animations
+    // Stage 0: Ring rotation
+    if (this.stage0OrbitRing) {
+      this.stage0OrbitRing.rotation.z = t * 0.5;
     }
 
-    // Subtle gentle villa rotation
-    if (this.villaGroup) {
-      this.villaGroup.rotation.y = Math.sin(t * 0.15) * 0.025;
+    // Stage 1: Fastag NFC wave pulsing
+    if (this.stage1NfcRing) {
+      const pulse = (Math.sin(t * 4.0) + 1) * 0.5;
+      this.stage1NfcRing.scale.setScalar(1 + pulse * 0.6);
+      this.stage1NfcRing.material.opacity = Math.max(0, 0.8 - pulse * 0.6);
     }
 
+    // Stage 2: Rupee Coin gentle spin
+    if (this.stage2Coin) {
+      this.stage2Coin.rotation.z = Math.sin(t * 1.5) * 0.2;
+    }
+
+    // Stage 4: Diya Flame flicker
+    if (this.stage4Flame && this.flameLight) {
+      const flicker = Math.sin(t * 12.0) * 0.06 + Math.cos(t * 7.0) * 0.04;
+      this.stage4Flame.scale.set(1 + flicker, 1 + flicker * 1.5, 1 + flicker);
+      this.flameLight.intensity = 3.5 + flicker * 5.0;
+    }
+    if (this.stage4GoldCoin) {
+      this.stage4GoldCoin.rotation.z = t * 0.4;
+    }
+
+    // Stage 5: Sovereign Compounding Gyroscope Rotations
+    if (this.stage5EpfRing) this.stage5EpfRing.rotation.z = t * 0.3;
+    if (this.stage5PpfRing) this.stage5PpfRing.rotation.x = t * 0.4;
+    if (this.stage5MfRing) this.stage5MfRing.rotation.y = t * 0.5;
+
+    // Stage 6: Geodesic Protective Dome rotation
+    if (this.stage6Dome) {
+      this.stage6Dome.rotation.y = t * 0.2;
+      this.stage6Dome.rotation.x = Math.sin(t * 0.15) * 0.1;
+    }
+
+    // Render Scene
     this.renderer.render(this.scene, this.camera);
-  }
-
-  updateHudBanner(curWp, nextWp, alpha) {
-    const bannerEl = document.getElementById('canvas-story-banner');
-    if (!bannerEl) return;
-
-    const activeWp = alpha < 0.5 ? curWp : nextWp;
-    if (this.stateMode === 'struggle') {
-      bannerEl.innerHTML = `<span class="status-dot-struggle"></span>${activeWp.struggleAlert}`;
-      bannerEl.className = 'canvas-story-banner mode-struggle';
-    } else {
-      bannerEl.innerHTML = `<span class="status-dot-covered"></span>${activeWp.coveredText}`;
-      bannerEl.className = 'canvas-story-banner mode-covered';
-    }
   }
 }

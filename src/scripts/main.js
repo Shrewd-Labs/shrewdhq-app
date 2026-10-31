@@ -1,15 +1,46 @@
 import { Household3DScene } from './three-scene.js';
 
 /**
- * ShrewdHQ Household OS — Main Narrative & Interaction Orchestrator
+ * ShrewdHQ — Main Narrative & Interaction Orchestrator
  * 
- * - Seamless synchronization between 3D Spatial Villa and the Indian Home Storyline
- * - "The Daily Struggle" vs "ShrewdHQ Has It Covered" Interactive State Switcher
- * - Interactive Amortization Prepayment Simulator
+ * - Synchronizes the 3D Spatial Household Artifact Engine with the story
+ * - "The Struggle 🔴" vs "Covered by ShrewdHQ 🟢" Interactive State Switcher
+ * - Dynamic 3D Artifact Banner and Nav Scrubber updates
+ * - Interactive Debt Prepayment Amortization Simulator
  * - Festive Sinking Fund & Calendar Milestones Planner
- * - PPF 5th-of-the-Month Compounding Lock Calculator
  * - Founding Household Reservation Enclave
  */
+
+const STAGE_STORY_BANNERS = [
+  {
+    struggle: '⚠️ 14 Scattered Bills, Deadlines & Unverified Portfolios',
+    covered: '🛡️ ShrewdHQ Sovereign Enclave: Unified Balance Sheet Clarity'
+  },
+  {
+    struggle: '🚨 Tuition Fee Due Today &bull; Vehicle Toll Tag Negative Alert',
+    covered: '✅ Challan Auto-Matched &bull; Toll Tag Auto-Replenished'
+  },
+  {
+    struggle: '⚠️ Cook/Maid Salary Confusion &bull; Society Late Penalty Warning',
+    covered: '✅ UPI AutoPay Active &bull; Zero Late Fees &bull; Shared Ledger'
+  },
+  {
+    struggle: '📈 Home Loan Floating Rate Shock &bull; Policy Expiry Spam',
+    covered: '✅ Debt Freedom: 2033 &bull; Zero-Broker Direct Policy Vault'
+  },
+  {
+    struggle: '⚠️ Festive Cash Crunch &bull; Jeweller 15% Making Charges Trap',
+    covered: '✨ Diwali Sinking Fund Ready &bull; Zero Credit Card Debt'
+  },
+  {
+    struggle: '⚠️ 18 Scattered SIPs &bull; Missed PPF 5th-of-Month Compounding',
+    covered: '🛡️ EPF 8.25% + PPF Protected &bull; Zero-Scraping CAS Sync'
+  },
+  {
+    struggle: '😓 Bedtime Financial Anxiety &bull; Unspoken Spouse Stress',
+    covered: '🌙 24.2 Months Runway &bull; Total Sovereign Harmony'
+  }
+];
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Initialize Three.js 3D Scene
@@ -26,7 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Struggle vs Covered Mode Switcher
   const btnToggleStruggle = document.getElementById('btn-mode-struggle');
   const btnToggleCovered = document.getElementById('btn-mode-covered');
+  const canvasBanner = document.getElementById('canvas-story-banner');
   let currentMode = 'covered';
+  let activeStageIndex = 0;
+
+  function updateBanner() {
+    if (!canvasBanner) return;
+    const stageData = STAGE_STORY_BANNERS[activeStageIndex] || STAGE_STORY_BANNERS[0];
+    if (currentMode === 'struggle') {
+      canvasBanner.innerHTML = `<span class="status-dot-struggle"></span><span>${stageData.struggle}</span>`;
+      canvasBanner.className = 'canvas-story-banner mode-struggle';
+    } else {
+      canvasBanner.innerHTML = `<span class="status-dot-covered"></span><span>${stageData.covered}</span>`;
+      canvasBanner.className = 'canvas-story-banner mode-covered';
+    }
+  }
 
   function setMode(mode) {
     currentMode = mode;
@@ -44,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
       card.classList.toggle('highlight-struggle', mode === 'struggle');
       card.classList.toggle('highlight-covered', mode === 'covered');
     });
+
+    updateBanner();
   }
 
   if (btnToggleStruggle) {
@@ -72,8 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Determine current active chapter
     const stages = document.querySelectorAll('.scroll-chapter-stage');
-    let activeStageIndex = 0;
-
     stages.forEach((stage, idx) => {
       const stageRect = stage.getBoundingClientRect();
       if (stageRect.top <= window.innerHeight * 0.45) {
@@ -96,6 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const timeStr = currentActiveStage.dataset.time;
       if (timeStr) clockIndicator.textContent = timeStr;
     }
+
+    updateBanner();
   }
 
   window.addEventListener('scroll', handleScroll, { passive: true });
