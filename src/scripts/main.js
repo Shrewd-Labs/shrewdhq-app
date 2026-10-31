@@ -14,31 +14,31 @@ import { Household3DScene } from './three-scene.js';
 const STAGE_STORY_BANNERS = [
   {
     struggle: '⚠️ 14 Scattered Bills, Deadlines & Unverified Portfolios',
-    covered: '🛡️ ShrewdHQ Sovereign Enclave: Unified Balance Sheet Clarity'
+    covered: '🛡️ Unified Household Balance Sheet: Complete Clarity'
   },
   {
     struggle: '🚨 Tuition Fee Due Today &bull; Vehicle Toll Tag Negative Alert',
-    covered: '✅ Challan Auto-Matched &bull; Toll Tag Auto-Replenished'
+    covered: '✅ Tuition Auto-Scheduled &bull; Toll Tag Ready'
   },
   {
     struggle: '⚠️ Cook/Maid Salary Confusion &bull; Society Late Penalty Warning',
-    covered: '✅ UPI AutoPay Active &bull; Zero Late Fees &bull; Shared Ledger'
+    covered: '✅ Staff Payroll AutoPay &bull; Zero Late Fees &bull; Shared View'
   },
   {
     struggle: '📈 Home Loan Floating Rate Shock &bull; Policy Expiry Spam',
-    covered: '✅ Debt Freedom: 2033 &bull; Zero-Broker Direct Policy Vault'
+    covered: '✅ Debt Freedom: 2033 &bull; All Policies Stored Safely'
   },
   {
     struggle: '⚠️ Festive Cash Crunch &bull; Jeweller 15% Making Charges Trap',
-    covered: '✨ Diwali Sinking Fund Ready &bull; Zero Credit Card Debt'
+    covered: '✨ Diwali Buffer Ready &bull; Zero Credit Card Debt'
   },
   {
     struggle: '⚠️ 18 Scattered SIPs &bull; Missed PPF 5th-of-Month Compounding',
-    covered: '🛡️ EPF 8.25% + PPF Protected &bull; Zero-Scraping CAS Sync'
+    covered: '🛡️ PPF & EPF Protected &bull; Zero Scrapers'
   },
   {
     struggle: '😓 Bedtime Financial Anxiety &bull; Unspoken Spouse Stress',
-    covered: '🌙 24.2 Months Runway &bull; Total Sovereign Harmony'
+    covered: '🌙 Over 2 Years Runway &bull; Total Peace of Mind'
   }
 ];
 
