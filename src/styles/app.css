@@ -1,4 +1,4 @@
-/* ── ShrewdHQ Household OS Ceramic Light & Obsidian System ── */
+/* ── ShrewdHQ Household OS Ceramic Light & Obsidian 3D Scroll System ── */
 :root {
   --bg-primary: #fbfbfd;
   --bg-card: #ffffff;
@@ -56,7 +56,7 @@ body {
 }
 
 .nav-container {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   height: 100%;
   display: flex;
@@ -127,6 +127,20 @@ body {
   gap: 12px;
 }
 
+.clock-pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--emerald-dark);
+  background: var(--emerald-subtle);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .btn-public-site {
   color: var(--text-secondary);
   text-decoration: none;
@@ -159,11 +173,11 @@ body {
   background: #333336;
 }
 
-/* ── Hero Section ── */
+/* ── Interactive 3D Scroll Hero Section ── */
 .hero-stage {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 48px 24px 24px;
+  padding: 40px 24px 20px;
   text-align: center;
 }
 
@@ -180,16 +194,16 @@ body {
   padding: 6px 14px;
   border-radius: 999px;
   border: 1px solid rgba(5, 150, 105, 0.2);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .hero-title {
-  font-size: clamp(34px, 5.2vw, 58px);
+  font-size: clamp(34px, 5.2vw, 56px);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.035em;
   color: var(--text-primary);
-  max-width: 920px;
+  max-width: 960px;
   margin: 0 auto 16px;
 }
 
@@ -203,125 +217,206 @@ body {
 }
 
 .hero-sub {
-  font-size: clamp(16px, 2vw, 18px);
+  font-size: clamp(16px, 1.8vw, 19px);
   color: var(--text-secondary);
-  max-width: 780px;
-  margin: 0 auto 32px;
+  max-width: 820px;
+  margin: 0 auto 28px;
   font-weight: 400;
 }
 
-/* ── Interactive 24-Hour Day Timeline Scrubber ── */
-.timeline-scrubber-wrap {
-  max-width: 980px;
-  margin: 0 auto 36px;
-  background: #ffffff;
-  border: 1px solid var(--border-medium);
-  border-radius: 20px;
-  padding: 16px 20px;
-  box-shadow: var(--shadow-sm);
+/* ── Sticky 3D Spatial Canvas + Narrative Scroll Stream ── */
+.scroll-3d-experience {
+  position: relative;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.timeline-header {
+.split-layout-grid {
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 40px;
+  position: relative;
+}
+
+@media (max-width: 1080px) {
+  .split-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Pinned 3D Viewport on the Right */
+.sticky-3d-column {
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 100px);
+  order: 2;
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-spatial);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1080px) {
+  .sticky-3d-column {
+    order: 1;
+    position: sticky;
+    top: 70px;
+    height: 420px;
+    margin-bottom: 24px;
+  }
+}
+
+.three-canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: grab;
+}
+
+.three-canvas-container:active {
+  cursor: grabbing;
+}
+
+/* 3D Viewport Overlay HUD */
+.hud-top-bar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-subtle);
+  pointer-events: none;
+  z-index: 10;
 }
 
-.timeline-caption {
-  font-size: 12px;
+.hud-badge {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
   font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-tertiary);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.timeline-clock {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--emerald-dark);
-  font-variant-numeric: tabular-nums;
-  background: var(--emerald-subtle);
-  padding: 3px 10px;
+.hud-hint {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 4px 10px;
   border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
-.timeline-beats {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+/* 3D Navigation Scrubber at bottom of canvas */
+.canvas-bottom-scrubber {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-medium);
+  border-radius: 16px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
 }
 
-.btn-beat {
-  background: var(--bg-bento);
-  border: 1px solid transparent;
-  border-radius: 12px;
-  padding: 10px 8px;
+.nav-beat-item {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex: 1;
+  transition: all 0.2s ease;
 }
 
-.btn-beat:hover {
-  background: #ffffff;
-  border-color: var(--border-medium);
+.nav-beat-item:hover {
+  background: var(--bg-hover);
 }
 
-.btn-beat.active {
-  background: #ffffff;
-  border-color: var(--emerald);
-  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+.nav-beat-item.active {
+  background: var(--text-primary);
+  color: #ffffff;
 }
 
-.beat-time {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-primary);
+.nav-beat-item.active .beat-sub {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.beat-clock {
+  font-size: 11px;
+  font-weight: 800;
   display: block;
 }
 
-.beat-label {
-  font-size: 11px;
+.beat-sub {
+  font-size: 10px;
   color: var(--text-secondary);
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: block;
 }
 
-@media (max-width: 768px) {
-  .timeline-beats {
-    grid-template-columns: 1fr;
-    gap: 6px;
+/* Narrative Scroll Stream on Left */
+.scroll-narrative-stream {
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  padding: 40px 0 120px;
+}
+
+@media (max-width: 1080px) {
+  .scroll-narrative-stream {
+    order: 2;
+    gap: 60px;
+    padding: 0 0 80px;
   }
 }
 
-/* ── 3D Spatial Household Operating System Stage ── */
-.spatial-stage-viewport {
-  perspective: 1200px;
-  max-width: 1280px;
-  margin: 0 auto 60px;
-  padding: 0 24px;
+/* Chapter Stage Cards */
+.scroll-chapter-stage {
+  opacity: 0.45;
+  transform: translateY(15px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  scroll-margin-top: 100px;
 }
 
-.spatial-os-board {
-  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+.scroll-chapter-stage.active-chapter {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chapter-glass-card {
+  background: #ffffff;
   border: 1px solid var(--border-medium);
-  border-radius: 32px;
+  border-radius: 28px;
   padding: 32px;
-  box-shadow: var(--shadow-spatial);
-  transform-style: preserve-3d;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
 }
 
-.spatial-os-board::before {
+.chapter-glass-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -331,226 +426,142 @@ body {
   background: linear-gradient(90deg, #059669 0%, #10b981 50%, #d97706 100%);
 }
 
-/* Top OS Header Bar */
-.os-top-bar {
-  display: flex;
-  justify-content: space-between;
+.chapter-meta-tag {
+  display: inline-flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.family-selector-tabs {
-  display: flex;
   gap: 6px;
-  background: var(--bg-bento);
-  padding: 4px;
-  border-radius: 999px;
-  border: 1px solid var(--border-subtle);
-}
-
-.tab-pill {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tab-pill:hover {
-  color: var(--text-primary);
-}
-
-.tab-pill.active {
-  background: #ffffff;
-  color: var(--text-primary);
-  box-shadow: var(--shadow-sm);
-}
-
-.household-summary-stats {
-  display: flex;
-  gap: 24px;
-}
-
-.summary-metric-group {
-  text-align: right;
-}
-
-.summary-label {
   font-size: 11px;
-  color: var(--text-tertiary);
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.summary-val {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-}
-
-.summary-val.emerald {
-  color: var(--emerald-dark);
-}
-
-/* ── Live Operational Modules Grid ── */
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-@media (max-width: 1024px) {
-  .modules-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 680px) {
-  .modules-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Module Card */
-.module-card {
-  background: #ffffff;
-  border: 1px solid var(--border-subtle);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.module-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-medium);
-  box-shadow: var(--shadow-md);
-}
-
-.module-card.highlighted {
-  border-color: rgba(5, 150, 105, 0.4);
-  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.12);
-  background: radial-gradient(circle at top right, rgba(5, 150, 105, 0.04) 0%, #ffffff 80%);
-}
-
-.module-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 6px;
   margin-bottom: 12px;
 }
 
-.module-tag {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 8px;
-  border-radius: 6px;
+.meta-school { background: var(--blue-subtle); color: var(--blue); }
+.meta-utility { background: var(--gold-subtle); color: var(--gold); }
+.meta-loan { background: var(--purple-subtle); color: var(--purple); }
+.meta-vault { background: rgba(0, 0, 0, 0.05); color: var(--text-primary); }
+.meta-statutory { background: var(--emerald-subtle); color: var(--emerald-dark); }
+.meta-copilot { background: linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%); color: var(--emerald-dark); }
+
+.chapter-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  line-height: 1.25;
 }
 
-.tag-school { background: var(--blue-subtle); color: var(--blue); }
-.tag-loan { background: var(--purple-subtle); color: var(--purple); }
-.tag-statutory { background: var(--emerald-subtle); color: var(--emerald-dark); }
-.tag-utility { background: var(--gold-subtle); color: var(--gold); }
-.tag-vault { background: rgba(0, 0, 0, 0.05); color: var(--text-primary); }
-.tag-copilot { background: linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%); color: var(--emerald-dark); }
-
-.module-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--emerald);
-}
-
-.module-status-dot.pending {
-  background: var(--gold);
-}
-
-.module-title {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-}
-
-.module-desc {
-  font-size: 12px;
+.chapter-desc {
+  font-size: 14px;
   color: var(--text-secondary);
-  line-height: 1.45;
-  margin-bottom: 16px;
+  line-height: 1.6;
+  margin-bottom: 24px;
 }
 
-.module-data-row {
+/* Chapter Interactive Data Box */
+.chapter-data-box {
   background: var(--bg-bento);
-  border-radius: 12px;
-  padding: 10px 12px;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.data-box-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
-  margin-top: auto;
+  font-size: 13px;
+  padding: 6px 0;
 }
 
-.data-label {
+.data-box-row:not(:last-child) {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.data-key {
   color: var(--text-secondary);
   font-weight: 500;
 }
 
-.data-value {
+.data-val {
   font-weight: 700;
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 
-/* AI Copilot Real-Time Observation Strip */
-.copilot-insight-bar {
-  margin-top: 24px;
+.data-val.emerald {
+  color: var(--emerald-dark);
+}
+
+.data-val.purple {
+  color: var(--purple);
+}
+
+/* Interactive Prepayment Range Slider */
+.debt-calculator-slider-wrap {
+  margin: 16px 0 12px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.custom-range-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: #d1d5db;
+  outline: none;
+}
+
+.custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--emerald);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
+}
+
+/* AI Copilot Callout Strip */
+.ai-copilot-callout {
   background: rgba(5, 150, 105, 0.06);
   border: 1px solid rgba(5, 150, 105, 0.2);
-  border-radius: 16px;
-  padding: 14px 18px;
+  border-radius: 14px;
+  padding: 14px 16px;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--emerald-dark);
 }
 
-.copilot-badge {
+.ai-copilot-badge {
   background: var(--emerald);
   color: #ffffff;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.08em;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 3px 6px;
+  border-radius: 4px;
   flex-shrink: 0;
-}
-
-.copilot-text {
-  font-size: 13px;
-  color: var(--emerald-dark);
-  font-weight: 500;
 }
 
 /* ── Founding Household Access & Under Construction Enclave ── */
 .construction-enclave-wrap {
-  max-width: 1280px;
-  margin: 0 auto 80px;
+  max-width: 1400px;
+  margin: 60px auto 80px;
   padding: 0 24px;
 }
 
@@ -739,7 +750,7 @@ body {
 }
 
 .footer-inner {
-  max-width: 1280px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

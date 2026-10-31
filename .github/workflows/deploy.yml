@@ -1,0 +1,60 @@
+name: Deploy ShrewdHQ App to AWS
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Build & Deploy to S3 + CloudFront
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Static App
+        run: npm run build
+
+      - name: Configure AWS Credentials (GitHub OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::515832766332:role/shrewdhq-app-deploy-prod
+          aws-region: ap-south-1
+          audience: sts.amazonaws.com
+
+      - name: Sync Static Distribution to S3
+        run: |
+          echo "Syncing dist/ to s3://shrewdhq-app-prod-ap-south-1/..."
+          aws s3 sync dist/ s3://shrewdhq-app-prod-ap-south-1/ --delete
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          echo "Resolving CloudFront Distribution ID from SSM Parameter Store..."
+          DIST_ID=$(aws ssm get-parameter --name "/shrewdhq/platform/prod/app-site/distribution-id" --query "Parameter.Value" --output text 2>/dev/null || echo "")
+          if [ -z "$DIST_ID" ] || [ "$DIST_ID" = "None" ]; then
+            echo "Falling back to list-distributions query for shrewdhq.app..."
+            DIST_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Aliases.Items!=null && contains(Aliases.Items, 'shrewdhq.app')].Id" --output text)
+          fi
+
+          if [ -n "$DIST_ID" ] && [ "$DIST_ID" != "None" ]; then
+            echo "Invalidating cache on Distribution ID: $DIST_ID"
+            aws cloudfront create-invalidation --distribution-id "$DIST_ID" --paths "/*"
+          else
+            echo "CloudFront distribution for shrewdhq.app not found; skipping invalidation."
+          fi
