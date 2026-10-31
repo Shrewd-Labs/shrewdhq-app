@@ -290,12 +290,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  pointer-events: none;
   z-index: 10;
+  gap: 10px;
 }
 
 .hud-badge {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 6px 12px;
@@ -309,17 +309,99 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
 
-.hud-hint {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 10px;
+/* Interactive Storyline Mode Switcher: Struggle vs Covered */
+.toggle-mode-group {
+  display: flex;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-medium);
+  border-radius: 999px;
+  padding: 3px;
+  box-shadow: var(--shadow-sm);
+  pointer-events: auto;
+}
+
+.btn-mode-toggle {
+  background: transparent;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-mode-toggle:hover {
+  color: var(--text-primary);
+}
+
+.btn-mode-toggle.active.struggle-btn {
+  background: #fee2e2;
+  color: #b91c1c;
+  box-shadow: 0 2px 6px rgba(185, 28, 28, 0.15);
+}
+
+.btn-mode-toggle.active.covered-btn {
+  background: #d1fae5;
+  color: #047857;
+  box-shadow: 0 2px 6px rgba(4, 120, 87, 0.15);
+}
+
+/* Dynamic Live Floating Story Banner on Canvas */
+.canvas-story-banner {
+  position: absolute;
+  top: 68px;
+  left: 16px;
+  right: 16px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(14px);
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.canvas-story-banner.mode-struggle {
+  background: rgba(254, 242, 242, 0.92);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #991b1b;
+}
+
+.canvas-story-banner.mode-covered {
+  background: rgba(236, 253, 245, 0.92);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #065f46;
+}
+
+.status-dot-struggle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  flex-shrink: 0;
+}
+
+.status-dot-covered {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  flex-shrink: 0;
 }
 
 /* 3D Navigation Scrubber at bottom of canvas */
@@ -533,7 +615,141 @@ body {
   box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
 }
 
-/* AI Copilot Callout Strip */
+/* Chapter Dual Cards: The Struggle vs How ShrewdHQ Covers It */
+.struggle-vs-covered-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.struggle-card-block {
+  background: #fff5f5;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 16px;
+  padding: 16px 18px;
+  transition: all 0.25s ease;
+}
+
+.struggle-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #b91c1c;
+  margin-bottom: 6px;
+}
+
+.struggle-text {
+  font-size: 13px;
+  color: #7f1d1d;
+  line-height: 1.5;
+}
+
+.covered-card-block {
+  background: #f0fdf4;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 16px 18px;
+  transition: all 0.25s ease;
+}
+
+.covered-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #047857;
+  margin-bottom: 6px;
+}
+
+.covered-text {
+  font-size: 13px;
+  color: #064e3b;
+  line-height: 1.5;
+}
+
+/* Card Mode Highlight Overrides */
+.chapter-glass-card.highlight-struggle {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.08);
+}
+
+.chapter-glass-card.highlight-covered {
+  border-color: rgba(5, 150, 105, 0.4);
+  box-shadow: 0 10px 30px rgba(5, 150, 105, 0.08);
+}
+
+/* Interactive Festive Sinking Fund Selector */
+.festive-sinking-calc {
+  background: var(--bg-bento);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+}
+
+.festive-calc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.festive-checkbox-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 600px) {
+  .festive-checkbox-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.festive-check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.festive-check-label:hover {
+  border-color: var(--emerald);
+}
+
+.festive-check-amount {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.festive-calc-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 13px;
+}
+
 .ai-copilot-callout {
   background: rgba(5, 150, 105, 0.06);
   border: 1px solid rgba(5, 150, 105, 0.2);

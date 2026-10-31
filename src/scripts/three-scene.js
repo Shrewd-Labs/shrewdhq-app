@@ -1,15 +1,14 @@
 import * as THREE from 'three';
 
 /**
- * ShrewdHQ Household OS — 3D Architectural Spatial Engine
+ * ShrewdHQ Household OS — 3D Architectural Spatial Story Engine
  * 
- * Inspired by luxury custom 3D scroll architectural showcases.
- * Renders an interactive 3D modern household villa in Three.js with:
- * - Dynamic diurnal sunlight and interior room glow
- * - 6 Architectural zones mapped to daily household operations
- * - Smooth scroll-driven camera choreography
- * - Interactive raycasting on spatial room beacons
- * - Mouse gyro perspective tilt
+ * Visually illustrates the real day-to-day struggles of an Indian home:
+ * - Tracking due dates for school, utilities, and EMIs
+ * - Evaluating investments (EPF, PPF 5th of month rule, CAS mutual funds)
+ * - Personal finance & budgeting (domestic staff, power grid, loan amortization)
+ * - Special days in the calendar (Diwali festive sinking funds, vacations, gold)
+ * - Transforming from chaos & mental overload into sovereign calm: "ShrewdHQ Has It Covered"
  */
 
 export class Household3DScene {
@@ -28,12 +27,13 @@ export class Household3DScene {
     this.gyroMouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
 
     this.beacons = [];
-    this.activeZoneIndex = 0;
     this.scrollProgress = 0;
+    this.stateMode = 'covered'; // 'struggle' or 'covered'
+    this.currentChapterIndex = 0;
 
-    // 6 Choreographed Camera Waypoints for the Scroll Stages
+    // 7 Storyline Camera Waypoints matching the human Indian home journey
     this.waypoints = [
-      // Stage 0: Overview / Frontal Perspective
+      // 0. The Master Overview (The Invisible Mental Load)
       {
         cam: new THREE.Vector3(18, 14, 22),
         target: new THREE.Vector3(0, 3, 0),
@@ -42,73 +42,87 @@ export class Household3DScene {
         sunIntensity: 2.2,
         ambientColor: 0xe0e7ff,
         skyBg: '#f8fafc',
-        zone: 'overview'
+        zone: 'overview',
+        struggleAlert: '⚠️ 14 Scattered Bills, Deadlines & Unverified Portfolios',
+        coveredText: '🛡️ ShrewdHQ Household OS: Unified Sovereign Clarity'
       },
-      // Stage 1: Front Entrance & School Bus (07:30 AM)
+      // 1. 07:15 AM: School Fees, Bus Fastag & WhatsApp Challans
       {
-        cam: new THREE.Vector3(10, 6, 12),
-        target: new THREE.Vector3(2, 2, 4),
-        sunPos: new THREE.Vector3(12, 18, 15),
-        sunColor: 0xfff1dc,
-        sunIntensity: 2.5,
+        cam: new THREE.Vector3(9, 5.5, 12.5),
+        target: new THREE.Vector3(2.5, 2, 5),
+        sunPos: new THREE.Vector3(14, 18, 16),
+        sunColor: 0xffedd5,
+        sunIntensity: 2.4,
         ambientColor: 0xfef3c7,
         skyBg: '#fffbeb',
-        zone: 'school'
+        zone: 'school',
+        struggleAlert: '🚨 DPS Fee Due Today &bull; Bus Fastag Negative Alert',
+        coveredText: '✅ Challan Auto-Matched &bull; Fastag Replenished'
       },
-      // Stage 2: Living & Domestic Staff Pavilion (09:00 AM)
+      // 2. 10:30 AM: Domestic Staff Payroll, Society Maintenance & Due Date Anxiety
       {
-        cam: new THREE.Vector3(6, 7, 9),
-        target: new THREE.Vector3(-1, 3, 1),
-        sunPos: new THREE.Vector3(8, 22, 10),
+        cam: new THREE.Vector3(6, 6.5, 8.5),
+        target: new THREE.Vector3(-0.5, 2.5, 1.5),
+        sunPos: new THREE.Vector3(6, 24, 10),
         sunColor: 0xfffae6,
         sunIntensity: 2.8,
         ambientColor: 0xecfdf5,
         skyBg: '#f0fdf4',
-        zone: 'utilities'
+        zone: 'utilities',
+        struggleAlert: '⚠️ Cook/Maid Salary Confusion &bull; Society Late Penalty Warning',
+        coveredText: '✅ UPI AutoPay Active &bull; Zero Late Fees &bull; Shared Ledger'
       },
-      // Stage 3: Financial Study & Debt Engine (11:00 AM)
+      // 3. 02:00 PM: The Loan EMI Rate Hike & Expiring Insurance Spam
       {
-        cam: new THREE.Vector3(-8, 9, 10),
-        target: new THREE.Vector3(-1, 5, 0),
-        sunPos: new THREE.Vector3(0, 28, 5),
+        cam: new THREE.Vector3(-8.5, 8.5, 9.5),
+        target: new THREE.Vector3(-1.2, 4.5, 0.5),
+        sunPos: new THREE.Vector3(0, 28, 4),
         sunColor: 0xffffff,
         sunIntensity: 3.0,
         ambientColor: 0xf5f3ff,
         skyBg: '#fbfbfe',
-        zone: 'loans'
+        zone: 'loans',
+        struggleAlert: '📈 Home Loan Interest Shock &bull; Car Insurance Expired',
+        coveredText: '✅ Debt Freedom: 2033 &bull; Zero-Broker Policy Renewed'
       },
-      // Stage 4: Garage & Fleet Bay (15:30 PM)
+      // 4. 06:30 PM: Special Days in the Calendar & Festive Budgeting
       {
-        cam: new THREE.Vector3(14, 5, 4),
-        target: new THREE.Vector3(6, 1.5, -1),
-        sunPos: new THREE.Vector3(-14, 16, -6),
-        sunColor: 0xfef08a,
-        sunIntensity: 2.4,
-        ambientColor: 0xeff6ff,
-        skyBg: '#eff6ff',
-        zone: 'vault'
+        cam: new THREE.Vector3(8.5, 7.5, 13.5),
+        target: new THREE.Vector3(1, 2.2, 3),
+        sunPos: new THREE.Vector3(-12, 14, 8),
+        sunColor: 0xfbbf24,
+        sunIntensity: 2.2,
+        ambientColor: 0xfef08a,
+        skyBg: '#fefce8',
+        zone: 'festive',
+        struggleAlert: '⚠️ Festive Cash Crunch &bull; Jewellery Making Charges Trap',
+        coveredText: '✨ Diwali Sinking Fund Ready &bull; Zero Credit Card Debt'
       },
-      // Stage 5: Sovereign Penthouse & Compounding Core (20:00 PM)
+      // 5. 09:00 PM: Evaluating Investments, EPF & The PPF 5th Rule
       {
-        cam: new THREE.Vector3(-7, 12, 8),
+        cam: new THREE.Vector3(-7, 12, 7.5),
         target: new THREE.Vector3(0, 6, 0),
-        sunPos: new THREE.Vector3(-16, 8, -12),
-        sunColor: 0xfb923c,
+        sunPos: new THREE.Vector3(-16, 8, -10),
+        sunColor: 0xf97316,
         sunIntensity: 1.8,
         ambientColor: 0x312e81,
         skyBg: '#f8fafc',
-        zone: 'statutory'
+        zone: 'statutory',
+        struggleAlert: '⚠️ 18 Scattered SIPs &bull; Missed PPF 5th-of-Month Interest',
+        coveredText: '🛡️ EPF 8.25% + PPF Protected &bull; Zero-Scraping CAS Sync'
       },
-      // Stage 6: AI Roof Deck & Night Horizon (22:30 PM)
+      // 6. 11:00 PM: The Bedtime Resolution: ShrewdHQ Has It All Covered
       {
-        cam: new THREE.Vector3(12, 15, 18),
+        cam: new THREE.Vector3(13, 14, 18),
         target: new THREE.Vector3(0, 4.5, 0),
-        sunPos: new THREE.Vector3(2, 20, -10),
+        sunPos: new THREE.Vector3(2, 20, -12),
         sunColor: 0xa5b4fc,
-        sunIntensity: 1.4,
+        sunIntensity: 1.5,
         ambientColor: 0x1e1b4b,
         skyBg: '#0f172a',
-        zone: 'copilot'
+        zone: 'copilot',
+        struggleAlert: '😓 Bedtime Financial Anxiety &bull; Unspoken Spouse Stress',
+        coveredText: '🌙 24.2 Months Runway &bull; Total Sovereign Harmony'
       }
     ];
 
@@ -153,7 +167,7 @@ export class Household3DScene {
     // 4. Lights
     this.setupLighting();
 
-    // 5. Build Architectural Model
+    // 5. Build Architectural Model with Indian Household Details
     this.buildModernVilla();
 
     // 6. Build Interactive Spatial Beacons
@@ -162,7 +176,7 @@ export class Household3DScene {
     // 7. Event Listeners
     this.bindEvents();
 
-    // 8. Start Animation Loop
+    // 8. Animation Loop
     this.animate = this.animate.bind(this);
     requestAnimationFrame(this.animate);
   }
@@ -189,24 +203,31 @@ export class Household3DScene {
     this.hemiLight = new THREE.HemisphereLight(0xffffff, 0xd1d5db, 0.6);
     this.scene.add(this.hemiLight);
 
-    // Interior glow lights
+    // Study financial monitor point light
     this.studyPointLight = new THREE.PointLight(0x38bdf8, 2, 8);
     this.studyPointLight.position.set(-1, 5.5, 0);
     this.scene.add(this.studyPointLight);
 
+    // Living/kitchen warm domestic light
     this.livingPointLight = new THREE.PointLight(0xfef08a, 1.8, 10);
     this.livingPointLight.position.set(0, 2.2, 1);
     this.scene.add(this.livingPointLight);
 
-    this.vaultPointLight = new THREE.PointLight(0x10b981, 2.5, 6);
+    // Rooftop Sovereign KMS Vault Emerald Light
+    this.vaultPointLight = new THREE.PointLight(0x10b981, 2.5, 8);
     this.vaultPointLight.position.set(0, 6.8, 0);
     this.scene.add(this.vaultPointLight);
+
+    // Festive Diya warm lantern point light
+    this.festivePointLight = new THREE.PointLight(0xf59e0b, 2.0, 9);
+    this.festivePointLight.position.set(2, 2.4, 3.5);
+    this.scene.add(this.festivePointLight);
   }
 
   buildModernVilla() {
     this.villaGroup = new THREE.Group();
 
-    // Materials
+    // Standard high-end architectural materials
     const concreteMat = new THREE.MeshStandardMaterial({
       color: 0xf1f5f9,
       roughness: 0.35,
@@ -252,7 +273,7 @@ export class Household3DScene {
     ground.receiveShadow = true;
     this.villaGroup.add(ground);
 
-    // Subtle lawn strip
+    // Lawn area
     const lawnGeo = new THREE.BoxGeometry(26, 0.05, 7);
     const lawnMat = new THREE.MeshStandardMaterial({
       color: 0xdcfce7,
@@ -263,7 +284,7 @@ export class Household3DScene {
     lawn.receiveShadow = true;
     this.villaGroup.add(lawn);
 
-    // 2. Driveway & Entrance Walkway
+    // Driveway & Entrance Walkway
     const pathGeo = new THREE.BoxGeometry(4, 0.08, 10);
     const pathMat = new THREE.MeshStandardMaterial({
       color: 0xcfd8dc,
@@ -274,7 +295,7 @@ export class Household3DScene {
     path.receiveShadow = true;
     this.villaGroup.add(path);
 
-    // 3. Ground Level: Living & Domestic Staff Pavilion
+    // 2. Ground Level: Living & Domestic Staff Pavilion
     const gFloorGeo = new THREE.BoxGeometry(14, 0.3, 10);
     const gFloor = new THREE.Mesh(gFloorGeo, concreteMat);
     gFloor.position.set(-1, 0.15, 0);
@@ -302,7 +323,7 @@ export class Household3DScene {
       this.villaGroup.add(col);
     });
 
-    // 4. Level 1: Slab & Financial Study (Home Workspace)
+    // 3. Level 1: Slab & Financial Study (Home Workspace)
     const midSlabGeo = new THREE.BoxGeometry(16, 0.4, 11);
     const midSlab = new THREE.Mesh(midSlabGeo, concreteMat);
     midSlab.position.set(-0.5, 3.2, 0);
@@ -324,19 +345,19 @@ export class Household3DScene {
     studyGlass.position.set(-3.5, 4.7, 4.55);
     this.villaGroup.add(studyGlass);
 
-    // Glowing Study Workstations (Debt Prepayment Simulators)
+    // Glowing Study Workstations (Home Loan & Investment Terminal)
     const deskGeo = new THREE.BoxGeometry(3, 0.1, 1.2);
     const desk = new THREE.Mesh(deskGeo, warmWoodMat);
     desk.position.set(-3.5, 4.2, 2.5);
     this.villaGroup.add(desk);
 
-    const screenGeo = new THREE.BoxGeometry(1.2, 0.6, 0.05);
+    const screenGeo = new THREE.BoxGeometry(1.4, 0.7, 0.05);
     const screenMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
     const screen = new THREE.Mesh(screenGeo, screenMat);
     screen.position.set(-3.5, 4.7, 2.5);
     this.villaGroup.add(screen);
 
-    // 5. Level 2: Penthouse & Sovereign KMS Vault Core
+    // 4. Level 2: Rooftop Sanctuary & Sovereign KMS Vault Core
     const roofSlabGeo = new THREE.BoxGeometry(12, 0.35, 9);
     const roofSlab = new THREE.Mesh(roofSlabGeo, concreteMat);
     roofSlab.position.set(-1.5, 6.2, 0);
@@ -357,7 +378,7 @@ export class Household3DScene {
     band.position.set(-0.5, 7.5, -0.5);
     this.villaGroup.add(band);
 
-    // 6. Modern Solar Pergola (AI Clean Energy & Roof Deck)
+    // Modern Solar Pergola (Clean Energy & Roof Deck)
     const pergolaBeamGeo = new THREE.BoxGeometry(10, 0.12, 0.2);
     for (let i = -3; i <= 3; i += 1) {
       const beam = new THREE.Mesh(pergolaBeamGeo, obsidianMat);
@@ -366,7 +387,7 @@ export class Household3DScene {
       this.villaGroup.add(beam);
     }
 
-    // 7. Right Wing: Modern Carport & Fleet Garage
+    // 5. Right Wing: Modern Carport & Fleet Garage
     const carportRoofGeo = new THREE.BoxGeometry(7, 0.3, 8);
     const carportRoof = new THREE.Mesh(carportRoofGeo, concreteMat);
     carportRoof.position.set(7.5, 2.8, -0.5);
@@ -411,7 +432,7 @@ export class Household3DScene {
     carGroup.position.set(7.5, 0, 0);
     this.villaGroup.add(carGroup);
 
-    // Miniature DPS Bangalore School Van at Entrance Gate
+    // Miniature School Van at Entrance Gate
     const schoolVanGroup = new THREE.Group();
     const vanBodyGeo = new THREE.BoxGeometry(2.8, 1.2, 1.4);
     const vanBodyMat = new THREE.MeshStandardMaterial({
@@ -432,6 +453,41 @@ export class Household3DScene {
     schoolVanGroup.rotation.y = -Math.PI / 4;
     this.villaGroup.add(schoolVanGroup);
 
+    // 6. Festive Courtyard / Veranda with Celebration Diyas
+    const verandaGeo = new THREE.BoxGeometry(6, 0.15, 4);
+    const veranda = new THREE.Mesh(verandaGeo, warmWoodMat);
+    veranda.position.set(1.5, 0.25, 3.5);
+    veranda.receiveShadow = true;
+    this.villaGroup.add(veranda);
+
+    // Diya golden lights on veranda edge
+    const diyaGeo = new THREE.CylinderGeometry(0.15, 0.1, 0.1, 12);
+    const diyaMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.4 });
+    const flameMat = new THREE.MeshBasicMaterial({ color: 0xffedd5 });
+
+    [[-0.8, 0.35, 4.8], [1.2, 0.35, 4.8], [3.2, 0.35, 4.8]].forEach(([x, y, z]) => {
+      const diya = new THREE.Mesh(diyaGeo, diyaMat);
+      diya.position.set(x, y, z);
+      const flame = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), flameMat);
+      flame.position.set(x, y + 0.12, z);
+      this.villaGroup.add(diya);
+      this.villaGroup.add(flame);
+    });
+
+    // 7. Protective Sovereign Household Shield Aura (activated in Chapter 6)
+    const shieldGeo = new THREE.SphereGeometry(18, 32, 24);
+    const shieldMat = new THREE.MeshPhysicalMaterial({
+      color: 0x10b981,
+      transparent: true,
+      opacity: 0.04,
+      roughness: 0.2,
+      transmission: 0.9,
+      side: THREE.BackSide
+    });
+    this.shieldMesh = new THREE.Mesh(shieldGeo, shieldMat);
+    this.shieldMesh.position.set(0, 5, 0);
+    this.villaGroup.add(this.shieldMesh);
+
     this.scene.add(this.villaGroup);
   }
 
@@ -441,49 +497,61 @@ export class Household3DScene {
         id: 'beacon-school',
         zone: 'school',
         pos: new THREE.Vector3(3, 2.2, 8.5),
-        color: 0x2563eb,
+        colorStruggle: 0xef4444, // Red struggle
+        colorCovered: 0x10b981,  // Emerald covered
         label: 'DPS School & Fastag',
-        time: '07:30 AM'
+        struggleDesc: 'Due Date Passed / Fastag Low',
+        coveredDesc: 'Auto-Matched & Replenished'
       },
       {
         id: 'beacon-utilities',
         zone: 'utilities',
-        pos: new THREE.Vector3(-1, 3.5, 2),
-        color: 0xd97706,
-        label: 'Staff UPI Mandates',
-        time: '09:00 AM'
+        pos: new THREE.Vector3(-0.5, 3.2, 1.5),
+        colorStruggle: 0xf59e0b, // Amber struggle
+        colorCovered: 0x059669,  // Emerald covered
+        label: 'Domestic Staff & Society',
+        struggleDesc: 'Whose Turn to Pay? Late Penalty Risk',
+        coveredDesc: 'UPI AutoPay 1st of Month'
       },
       {
         id: 'beacon-loans',
         zone: 'loans',
         pos: new THREE.Vector3(-3.5, 6.2, 3.5),
-        color: 0x7c3aed,
-        label: 'Home Loan & Debt',
-        time: '11:00 AM'
+        colorStruggle: 0xef4444, // Red struggle
+        colorCovered: 0x7c3aed,  // Purple alpha covered
+        label: 'SBI Home Loan & EMI',
+        struggleDesc: 'Rate Hike Added 4 Yrs to Loan',
+        coveredDesc: 'Prepayment Slashes 3.4 Yrs (2033)'
       },
       {
-        id: 'beacon-vault',
-        zone: 'vault',
-        pos: new THREE.Vector3(7.5, 3.2, 0),
-        color: 0x0284c7,
-        label: 'Fleet & Policy Vault',
-        time: '15:30 PM'
+        id: 'beacon-festive',
+        zone: 'festive',
+        pos: new THREE.Vector3(1.5, 2.6, 3.5),
+        colorStruggle: 0xf59e0b, // Amber struggle
+        colorCovered: 0xd97706,  // Gold covered
+        label: 'Festive & Calendar Milestones',
+        struggleDesc: 'Lump-Sum Squeeze on Savings',
+        coveredDesc: 'Monthly Sinking Fund: 100% Ready'
       },
       {
         id: 'beacon-statutory',
         zone: 'statutory',
         pos: new THREE.Vector3(-0.5, 9, -0.5),
-        color: 0x059669,
-        label: 'Sovereign EPF/PPF',
-        time: '20:00 PM'
+        colorStruggle: 0xef4444, // Red struggle
+        colorCovered: 0x059669,  // Emerald covered
+        label: 'Sovereign EPF & PPF 5th Rule',
+        struggleDesc: 'Missed 5th-of-Month Compounding',
+        coveredDesc: 'Compounding Alert: Full Interest Locked'
       },
       {
         id: 'beacon-copilot',
         zone: 'copilot',
         pos: new THREE.Vector3(-2, 10.2, 0),
-        color: 0x10b981,
+        colorStruggle: 0x64748b, // Slate struggle
+        colorCovered: 0x10b981,  // Emerald covered
         label: 'AI Household Copilot',
-        time: '22:30 PM'
+        struggleDesc: 'Spouse Financial Arguments',
+        coveredDesc: '24.2 Months Runway & Harmony'
       }
     ];
 
@@ -495,15 +563,17 @@ export class Household3DScene {
       beaconGroup.position.copy(def.pos);
       beaconGroup.userData = { ...def, index };
 
+      const activeColor = this.stateMode === 'struggle' ? def.colorStruggle : def.colorCovered;
+
       // Core pulsing sphere
-      const sphereGeo = new THREE.SphereGeometry(0.22, 16, 16);
-      const sphereMat = new THREE.MeshBasicMaterial({ color: def.color });
+      const sphereGeo = new THREE.SphereGeometry(0.24, 16, 16);
+      const sphereMat = new THREE.MeshBasicMaterial({ color: activeColor });
       const sphere = new THREE.Mesh(sphereGeo, sphereMat);
       beaconGroup.add(sphere);
 
       // Expanding pulse ring
       const ringMat = new THREE.MeshBasicMaterial({
-        color: def.color,
+        color: activeColor,
         side: THREE.DoubleSide,
         transparent: true,
         opacity: 0.7
@@ -512,12 +582,28 @@ export class Household3DScene {
       beaconGroup.add(ring);
 
       this.scene.add(beaconGroup);
-      this.beacons.push({ group: beaconGroup, sphere, ring, initialScale: 1 });
+      this.beacons.push({ def, group: beaconGroup, sphere, ring });
     });
   }
 
+  setStateMode(mode) {
+    this.stateMode = mode; // 'struggle' or 'covered'
+
+    // Update beacon colors
+    this.beacons.forEach((b) => {
+      const targetColor = mode === 'struggle' ? b.def.colorStruggle : b.def.colorCovered;
+      b.sphere.material.color.setHex(targetColor);
+      b.ring.material.color.setHex(targetColor);
+    });
+
+    // Update shield intensity
+    if (this.shieldMesh) {
+      this.shieldMesh.material.opacity = mode === 'covered' ? 0.08 : 0.01;
+      this.shieldMesh.material.color.setHex(mode === 'covered' ? 0x10b981 : 0xf87171);
+    }
+  }
+
   bindEvents() {
-    // Window Resize
     window.addEventListener('resize', () => {
       if (!this.container) return;
       this.width = this.container.clientWidth;
@@ -529,7 +615,6 @@ export class Household3DScene {
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
 
-    // Mouse Gyro / Parallax Move
     window.addEventListener('mousemove', (e) => {
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -541,7 +626,7 @@ export class Household3DScene {
       this.gyroMouse.targetY = ny * 1.0;
     });
 
-    // Raycast Click on 3D Beacons
+    // Click on 3D beacons
     this.container.addEventListener('click', (e) => {
       const rect = this.container.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -581,16 +666,16 @@ export class Household3DScene {
     this.gyroMouse.x += (this.gyroMouse.targetX - this.gyroMouse.x) * 0.06;
     this.gyroMouse.y += (this.gyroMouse.targetY - this.gyroMouse.y) * 0.06;
 
-    // 2. Animate 3D Beacons Pulse
+    // 2. Animate Beacons Pulse
     this.beacons.forEach((b, i) => {
-      const wave = Math.sin(t * 3.5 + i * 1.2);
-      b.sphere.scale.setScalar(1 + wave * 0.15);
+      const speed = this.stateMode === 'struggle' ? 5.0 : 3.0; // faster urgent pulse in struggle mode
+      const wave = Math.sin(t * speed + i * 1.2);
+      b.sphere.scale.setScalar(1 + wave * 0.16);
       b.ring.scale.setScalar(1 + (wave + 1) * 0.45);
       b.ring.material.opacity = Math.max(0, 0.8 - (wave + 1) * 0.35);
     });
 
-    // 3. Interpolate Camera along Scroll Waypoints
-    // Waypoints array length: 7 points (stages 0 to 6)
+    // 3. Interpolate Camera along Storyline Waypoints
     const totalSegments = this.waypoints.length - 1;
     const scaledProgress = this.scrollProgress * totalSegments;
     const segmentIndex = Math.floor(scaledProgress);
@@ -601,19 +686,21 @@ export class Household3DScene {
     const nextWp = this.waypoints[nextIndex];
 
     if (currentWp && nextWp) {
-      // Interpolate Camera Position
+      this.currentChapterIndex = segmentIndex;
+
+      // Camera position
       const targetCam = new THREE.Vector3().lerpVectors(currentWp.cam, nextWp.cam, segmentAlpha);
       targetCam.x += this.gyroMouse.x;
       targetCam.y += this.gyroMouse.y;
       this.currentCamPos.lerp(targetCam, 0.08);
       this.camera.position.copy(this.currentCamPos);
 
-      // Interpolate LookAt Target
+      // Camera target
       const targetLook = new THREE.Vector3().lerpVectors(currentWp.target, nextWp.target, segmentAlpha);
       this.currentTarget.lerp(targetLook, 0.08);
       this.camera.lookAt(this.currentTarget);
 
-      // Interpolate Sunlight Position and Color
+      // Sunlight position & color
       const targetSunPos = new THREE.Vector3().lerpVectors(currentWp.sunPos, nextWp.sunPos, segmentAlpha);
       this.dirLight.position.copy(targetSunPos);
 
@@ -627,17 +714,34 @@ export class Household3DScene {
         segmentAlpha
       );
 
-      // Interpolate Ambient Light
+      // Ambient light
       const curAmbCol = new THREE.Color(currentWp.ambientColor);
       const nextAmbCol = new THREE.Color(nextWp.ambientColor);
       this.ambientLight.color.lerpColors(curAmbCol, nextAmbCol, segmentAlpha);
+
+      // Update HUD banner on canvas
+      this.updateHudBanner(currentWp, nextWp, segmentAlpha);
     }
 
-    // Gentle subtle float rotation
+    // Subtle gentle villa rotation
     if (this.villaGroup) {
-      this.villaGroup.rotation.y = Math.sin(t * 0.15) * 0.03;
+      this.villaGroup.rotation.y = Math.sin(t * 0.15) * 0.025;
     }
 
     this.renderer.render(this.scene, this.camera);
+  }
+
+  updateHudBanner(curWp, nextWp, alpha) {
+    const bannerEl = document.getElementById('canvas-story-banner');
+    if (!bannerEl) return;
+
+    const activeWp = alpha < 0.5 ? curWp : nextWp;
+    if (this.stateMode === 'struggle') {
+      bannerEl.innerHTML = `<span class="status-dot-struggle"></span>${activeWp.struggleAlert}`;
+      bannerEl.className = 'canvas-story-banner mode-struggle';
+    } else {
+      bannerEl.innerHTML = `<span class="status-dot-covered"></span>${activeWp.coveredText}`;
+      bannerEl.className = 'canvas-story-banner mode-covered';
+    }
   }
 }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShrewdHQ — The Operating System of the Home | Built for the AI Era</title>
-  <meta name="description" content="A custom 3D spatial operating system choreographing daily household schedules, school fees, EMIs, vehicle logistics, domestic staff payroll, and sovereign statutory compounding. Built for the AI era.">
+  <title>ShrewdHQ — The Operating System of the Indian Home | Built for the AI Era</title>
+  <meta name="description" content="From school fees and domestic staff payroll to loan rate hikes, festive sinking funds, and sovereign PPF compounding: ShrewdHQ solves the daily mental load of running an Indian home. Built for the AI era.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23059669'/><text x='50' y='68' font-size='56' font-family='system-ui, sans-serif' font-weight='900' fill='white' text-anchor='middle'>S</text></svg>">
   <link rel="stylesheet" href="./src/styles/app.css">
 </head>
@@ -24,7 +24,7 @@
       <div class="nav-right-actions">
         <div class="clock-pill">
           <span>🕒</span>
-          <span id="top-bar-clock">07:30 AM</span>
+          <span id="top-bar-clock">07:15 AM</span>
         </div>
         <a href="https://shrewdhq.in" class="btn-public-site" target="_blank" rel="noopener">
           Public Site ↗
@@ -43,10 +43,10 @@
         <span>⚡</span> Built for the AI Era &bull; Indian Household Architecture
       </div>
       <h1 class="hero-title">
-        The Intelligent <em>Operating System</em> for Running Your Home.
+        The Daily Running of an Indian Home, <em>Finally Covered</em>.
       </h1>
       <p class="hero-sub">
-        Not just finance. A living, scroll-driven 3D spatial command center orchestrating school fees, bus Fastags, home loan prepayments, domestic staff payroll, and sovereign EPF/PPF compounding in real time.
+        Between tracking chaotic school fee challans, domestic staff payroll, RBI loan rate hikes, festive calendar spikes, and evaluating scattered mutual funds—managing an urban Indian household is an exhausting mental marathon. ShrewdHQ turns domestic friction into sovereign clarity.
       </p>
     </section>
 
@@ -56,14 +56,28 @@
         
         <!-- Pinned 3D Viewport Column (Right) -->
         <aside class="sticky-3d-column">
+          <!-- Top HUD with Struggle vs Covered State Switcher -->
           <div class="hud-top-bar">
             <div class="hud-badge">
               <span class="pulse-dot"></span>
-              3D Spatial Household Villa
+              3D Household Villa
             </div>
-            <div class="hud-hint">
-              <span>Scroll to Orbit / Drag to Tilt</span>
+
+            <!-- Interactive Mode Switcher -->
+            <div class="toggle-mode-group">
+              <button type="button" class="btn-mode-toggle struggle-btn" id="btn-mode-struggle" aria-label="View Daily Struggle Mode">
+                <span>🔴</span> Daily Struggle
+              </button>
+              <button type="button" class="btn-mode-toggle active covered-btn" id="btn-mode-covered" aria-label="View ShrewdHQ Covered Mode">
+                <span>🟢</span> ShrewdHQ Covered
+              </button>
             </div>
+          </div>
+
+          <!-- Dynamic Live Floating Story Banner on Canvas -->
+          <div class="canvas-story-banner mode-covered" id="canvas-story-banner">
+            <span class="status-dot-covered"></span>
+            <span>🛡️ ShrewdHQ Household OS: Unified Sovereign Clarity</span>
           </div>
 
           <!-- WebGL Canvas Container -->
@@ -71,33 +85,33 @@
 
           <!-- Bottom Time Chapter Scrubber -->
           <div class="canvas-bottom-scrubber">
-            <button type="button" class="nav-beat-item active" data-target="scroll-stage-overview" aria-label="Overview">
+            <button type="button" class="nav-beat-item active" data-target="scroll-stage-overview" aria-label="The Mental Load">
               <span class="beat-clock">Core</span>
-              <span class="beat-sub">Overview</span>
+              <span class="beat-sub">Mental Load</span>
             </button>
             <button type="button" class="nav-beat-item" data-target="scroll-stage-school" aria-label="School & Bus">
-              <span class="beat-clock">07:30</span>
+              <span class="beat-clock">07:15</span>
               <span class="beat-sub">School</span>
             </button>
-            <button type="button" class="nav-beat-item" data-target="scroll-stage-utilities" aria-label="Staff & Bills">
-              <span class="beat-clock">09:00</span>
+            <button type="button" class="nav-beat-item" data-target="scroll-stage-utilities" aria-label="Staff & Society">
+              <span class="beat-clock">10:30</span>
               <span class="beat-sub">Staff</span>
             </button>
             <button type="button" class="nav-beat-item" data-target="scroll-stage-loans" aria-label="Home Loan & Debt">
-              <span class="beat-clock">11:00</span>
+              <span class="beat-clock">14:00</span>
               <span class="beat-sub">Debt</span>
             </button>
-            <button type="button" class="nav-beat-item" data-target="scroll-stage-vault" aria-label="Cars & Insurance">
-              <span class="beat-clock">15:30</span>
-              <span class="beat-sub">Fleet</span>
+            <button type="button" class="nav-beat-item" data-target="scroll-stage-festive" aria-label="Special Days">
+              <span class="beat-clock">18:30</span>
+              <span class="beat-sub">Festive</span>
             </button>
-            <button type="button" class="nav-beat-item" data-target="scroll-stage-statutory" aria-label="EPF & PPF">
-              <span class="beat-clock">20:00</span>
-              <span class="beat-sub">Sovereign</span>
+            <button type="button" class="nav-beat-item" data-target="scroll-stage-statutory" aria-label="Investments & PPF">
+              <span class="beat-clock">21:00</span>
+              <span class="beat-sub">Invest</span>
             </button>
-            <button type="button" class="nav-beat-item" data-target="scroll-stage-copilot" aria-label="AI Horizon">
-              <span class="beat-clock">22:30</span>
-              <span class="beat-sub">Horizon</span>
+            <button type="button" class="nav-beat-item" data-target="scroll-stage-copilot" aria-label="Bedtime Horizon">
+              <span class="beat-clock">23:00</span>
+              <span class="beat-sub">Covered</span>
             </button>
           </div>
         </aside>
@@ -105,146 +119,201 @@
         <!-- Narrative Scroll Stream (Left) -->
         <div class="scroll-narrative-stream" id="scroll-narrative-stream">
           
-          <!-- Chapter 0: Master Overview -->
+          <!-- Chapter 0: Master Overview: The Invisible Mental Load -->
           <section class="scroll-chapter-stage active-chapter" id="scroll-stage-overview" data-time="07:00 AM">
-            <div class="chapter-glass-card">
+            <div class="chapter-glass-card highlight-covered">
               <div class="chapter-meta-tag meta-vault">
-                <span>🏛️</span> Chapter 00 &bull; The Master Household Architecture
+                <span>🏛️</span> The Human Reality &bull; The Invisible Household Load
               </div>
-              <h2 class="chapter-title">The Operating System of the Modern Indian Home.</h2>
+              <h2 class="chapter-title">Running an Indian Home Feels Like Running an Unregulated Enterprise.</h2>
               <p class="chapter-desc">
-                Between children’s tuition deadlines, society maintenance, domestic staff UPI AutoPay, home loan interest rates, car insurance renewals, and sovereign EPF/PPF compounding, managing an urban household has become as complex as running an enterprise. ShrewdHQ turns fragmentation into unified sovereign clarity.
+                In most Indian households, one partner quietly carries the crushing cognitive load of due dates, policy renewals, investment statements, and cash flow. Multiple banking apps, forgotten passwords, paper receipts, and WhatsApp group reminders lead to constant low-grade anxiety.
               </p>
+
+              <!-- Struggle vs Covered Comparison Box -->
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> The Daily Struggle
+                  </div>
+                  <div class="struggle-text">
+                    14 scattered bills across email and SMS. Late payment penalties on society dues. Forgotten credit card reward point expirations. Zero single source of truth for family net worth.
+                  </div>
+                </div>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> How ShrewdHQ Has It Covered
+                  </div>
+                  <div class="covered-text">
+                    A single unified household operating system. Client-side statement parsing, proactive due-date choreography, and shared transparency across partners. Zero arguments, zero missed deadlines.
+                  </div>
+                </div>
+              </div>
 
               <div class="chapter-data-box">
                 <div class="data-box-row">
-                  <span class="data-key">Combined Household Runway</span>
+                  <span class="data-key">Household Runway</span>
                   <span class="data-val emerald">24.2 Months Liquid</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Monthly Sovereign Accrual</span>
-                  <span class="data-val">+₹45,200 / mo</span>
+                  <span class="data-key">Unresolved Household Invoices</span>
+                  <span class="data-val emerald">0 (All Reconciled)</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Next Action Deadline</span>
-                  <span class="data-val" style="color: #d97706;">Nov 5 (School &amp; Home Loan)</span>
-                </div>
-              </div>
-
-              <div class="ai-copilot-callout">
-                <span class="ai-copilot-badge">AI CORE</span>
-                <div>
-                  <strong>Morning Household Briefing:</strong> "All morning operational queues clear. Today’s scheduled cash outflows: ₹78,500 (DPS Bangalore Tuition) and ₹32,500 (Domestic Staff UPI mandate)."
+                  <span class="data-key">Data Residency</span>
+                  <span class="data-val">AWS ap-south-1 (Mumbai)</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Chapter 1: 07:30 AM — School Tuition, Fastag & Morning Schedules -->
-          <section class="scroll-chapter-stage" id="scroll-stage-school" data-time="07:30 AM">
-            <div class="chapter-glass-card">
+          <!-- Chapter 1: 07:15 AM — School Due Dates, WhatsApp Challans & Bus Fastag -->
+          <section class="scroll-chapter-stage" id="scroll-stage-school" data-time="07:15 AM">
+            <div class="chapter-glass-card highlight-covered">
               <div class="chapter-meta-tag meta-school">
-                <span>🚌</span> Chapter 01 &bull; 07:30 AM &bull; Entrance &amp; Education
+                <span>🚌</span> Chapter 01 &bull; 07:15 AM &bull; School Fees &amp; Fastags
               </div>
-              <h2 class="chapter-title">School Schedules, Term Fees &amp; Bus Logistics.</h2>
+              <h2 class="chapter-title">The Morning Scramble: School Fee Challans &amp; Bus Tolls.</h2>
               <p class="chapter-desc">
-                Tuition fee invoices parsed straight from school portals with zero manual typing. School bus Fastag balances monitored with automated replenishment triggers whenever the balance dips below ₹1,000.
+                It’s 7:15 AM. You're packing lunchboxes while searching through 80 unread messages in the class WhatsApp group. Did the quarterly school fee challan deadline pass? Will your child’s name appear on the fee default list?
               </p>
+
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> The Daily Struggle
+                  </div>
+                  <div class="struggle-text">
+                    Confusing PDF challans buried in school portals. Late fee of ₹2,500 after the 5th. School bus Fastag balance drops to negative at the toll plaza, creating frantic morning phone calls.
+                  </div>
+                </div>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> How ShrewdHQ Has It Covered
+                  </div>
+                  <div class="covered-text">
+                    Invoices auto-extracted from school portal PDFs. Payment scheduled directly from the shared family account 48 hours before late-fee penalties. Bus Fastag auto-topped up whenever balance dips below ₹1,000.
+                  </div>
+                </div>
+              </div>
 
               <div class="chapter-data-box">
                 <div class="data-box-row">
-                  <span class="data-key">DPS Bangalore — Term 2 Tuition</span>
-                  <span class="data-val">₹78,500 (Due Nov 5)</span>
+                  <span class="data-key">DPS Bangalore — Term 2 Fee</span>
+                  <span class="data-val">₹78,500 (Auto-Queued Nov 3)</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Invoice PDF Match</span>
-                  <span class="data-val emerald">100% Verified (Client-Side)</span>
+                  <span class="data-key">School Late-Fee Penalty Saved</span>
+                  <span class="data-val emerald">₹2,500 Avoided</span>
                 </div>
                 <div class="data-box-row">
                   <span class="data-key">Bus Fastag Balance</span>
-                  <span class="data-val">₹1,850 (Auto-Topped Up)</span>
+                  <span class="data-val emerald">₹1,850 (Auto-Replenished)</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">After-School Academy</span>
-                  <span class="data-val">Robotics (Tue/Thu) &bull; Tennis (Sat)</span>
+                  <span class="data-key">Extracurricular Academies</span>
+                  <span class="data-val">Robotics &amp; Tennis Scheduled</span>
                 </div>
               </div>
 
               <div class="ai-copilot-callout">
                 <span class="ai-copilot-badge">AI INSIGHT</span>
                 <div>
-                  "Term 2 tuition payment scheduled from ICICI Family Shared Account on Nov 3, safely beating the late-fee penalty date by 48 hours."
+                  "Term 2 tuition payment scheduled from ICICI Shared Account on Nov 3. Zero last-minute rush, zero penalty."
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Chapter 2: 09:00 AM — Domestic Staff & Utilities -->
-          <section class="scroll-chapter-stage" id="scroll-stage-utilities" data-time="09:00 AM">
-            <div class="chapter-glass-card">
+          <!-- Chapter 2: 10:30 AM — Domestic Staff Payroll, Utilities & "Who Paid What?" -->
+          <section class="scroll-chapter-stage" id="scroll-stage-utilities" data-time="10:30 AM">
+            <div class="chapter-glass-card highlight-covered">
               <div class="chapter-meta-tag meta-utility">
-                <span>🍳</span> Chapter 02 &bull; 09:00 AM &bull; Domestic Staff &amp; Grid
+                <span>🍳</span> Chapter 02 &bull; 10:30 AM &bull; Domestic Staff &amp; Grid
               </div>
-              <h2 class="chapter-title">Domestic Staff Payroll &amp; Living Utilities.</h2>
+              <h2 class="chapter-title">The Domestic Juggling: Cook, Maid, Driver &amp; Society Dues.</h2>
               <p class="chapter-desc">
-                Domestic trust is built on predictability. Cook, housekeeper, and driver salary disbursements queued via UPI AutoPay for the 1st of every month with automated digital salary slip logs. Society maintenance and power grid meters auto-reconciled.
+                Domestic trust is the heartbeat of an Indian home. But keeping track of salary advances, festival bonuses, and utility bills leads to constant spouse friction: <em>"Did you transfer Shanta-bai's salary or should I do it?"</em>
               </p>
+
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> The Daily Struggle
+                  </div>
+                  <div class="struggle-text">
+                    Cook asks if her salary was credited. Driver asks for an advance. Apartment association threatens a 2% monthly late fee on maintenance. Electricity bill due date is buried in an unread SMS. Double-payments between spouses happen constantly.
+                  </div>
+                </div>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> How ShrewdHQ Has It Covered
+                  </div>
+                  <div class="covered-text">
+                    Domestic payroll executed automatically via UPI AutoPay on the 1st of every month with digital slips. Utility bills auto-reconciled. Both partners see real-time payment checkmarks so no bill is ever paid twice or forgotten.
+                  </div>
+                </div>
+              </div>
 
               <div class="chapter-data-box">
                 <div class="data-box-row">
                   <span class="data-key">Cook &amp; Housekeeping Payroll</span>
-                  <span class="data-val">₹22,000 (UPI AutoPay Active)</span>
+                  <span class="data-val">₹22,000 (Queued 1st of Month)</span>
                 </div>
                 <div class="data-box-row">
                   <span class="data-key">Driver Monthly Salary</span>
-                  <span class="data-val">₹18,500 (1st of Month)</span>
+                  <span class="data-val">₹18,500 (Pre-Approved)</span>
                 </div>
                 <div class="data-box-row">
                   <span class="data-key">Apartment Society Maintenance</span>
-                  <span class="data-val">₹6,800 (Pre-Authorized)</span>
+                  <span class="data-val emerald">₹6,800 (Auto-Cleared)</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Bescom / Tata Power Smart Grid</span>
-                  <span class="data-val emerald">₹4,820 (Paid)</span>
+                  <span class="data-key">Power &amp; Piped Gas (IGL)</span>
+                  <span class="data-val emerald">₹4,820 (Zero Late Fees)</span>
                 </div>
               </div>
 
               <div class="ai-copilot-callout">
                 <span class="ai-copilot-badge">AI INSIGHT</span>
                 <div>
-                  "Diwali bonus calculation for domestic staff pre-allocated in family reserve buffer. Zero cash scramble at festival time."
+                  "Diwali festival bonus for cook and driver pre-reserved in domestic sinking fund. No end-of-month cash squeeze."
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Chapter 3: 11:00 AM — The Debt Acceleration Engine -->
-          <section class="scroll-chapter-stage" id="scroll-stage-loans" data-time="11:00 AM">
-            <div class="chapter-glass-card">
+          <!-- Chapter 3: 14:00 PM — The Loan EMI Rate Hike & Expiring Insurance Spam -->
+          <section class="scroll-chapter-stage" id="scroll-stage-loans" data-time="02:00 PM">
+            <div class="chapter-glass-card highlight-covered">
               <div class="chapter-meta-tag meta-loan">
-                <span>📈</span> Chapter 03 &bull; 11:00 AM &bull; Home Loans &amp; Prepayment
+                <span>📈</span> Chapter 03 &bull; 02:00 PM &bull; Loans, Prepayment &amp; Insurance
               </div>
-              <h2 class="chapter-title">The Debt Acceleration Engine: SBI Home Loan &amp; EV6 EMI.</h2>
+              <h2 class="chapter-title">The Loan Rate Hike Shock &amp; Policy Expiry Spam.</h2>
               <p class="chapter-desc">
-                Bank loan statements usually obscure how much principal you actually owe. ShrewdHQ computes the exact real-time interest arbitrage between 8.5% debt prepayments and 12% equity compounding.
+                In the middle of a workday Zoom call, an SMS dings: SBI Home Loan EMI debited ₹64,200. You wonder: with recent RBI rate hikes, did the bank quietly add another 4 years to your loan without telling you? Meanwhile, spam callers yell that your car insurance expired yesterday.
               </p>
 
-              <div class="chapter-data-box">
-                <div class="data-box-row">
-                  <span class="data-key">SBI Green Home Loan (EMI)</span>
-                  <span class="data-val">₹64,200 / mo @ 8.50%</span>
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> The Daily Struggle
+                  </div>
+                  <div class="struggle-text">
+                    Floating interest rates disguise the true debt horizon: a 30-year home loan can turn into 36 years after rate hikes. Insurance policies lapse because reminder emails were marked spam. Missing parents' medical policy PDF means losing ₹50,000 Section 80D tax deductions.
+                  </div>
                 </div>
-                <div class="data-box-row">
-                  <span class="data-key">Kia EV6 Electric Car Loan</span>
-                  <span class="data-val">₹34,500 / mo @ 9.10%</span>
-                </div>
-                <div class="data-box-row">
-                  <span class="data-key">Prepayment Freedom Date</span>
-                  <span class="data-val purple" id="debt-years-saved">3.4 Years Early</span>
-                </div>
-                <div class="data-box-row">
-                  <span class="data-key">Total Interest Retained</span>
-                  <span class="data-val emerald" id="debt-interest-saved">₹14.6 Lakhs Saved</span>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> How ShrewdHQ Has It Covered
+                  </div>
+                  <div class="covered-text">
+                    The Debt Acceleration Engine computes the exact mathematical impact of prepayments. An extra ₹50k annual lump sum cuts 3.4 years off your tenure! Car and senior citizen health policies encrypted in AWS Mumbai KMS vault, pre-tagged for tax deductions.
+                  </div>
                 </div>
               </div>
 
@@ -266,103 +335,199 @@
                 >
               </div>
 
-              <div class="ai-copilot-callout">
-                <span class="ai-copilot-badge">RECOMMENDATION</span>
-                <div>
-                  "Prepaying the 9.1% car loan first yields a risk-free 9.1% post-tax return before tackling the tax-deductible home loan."
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Chapter 4: 15:30 PM — Vehicle Logistics & Policy Vault -->
-          <section class="scroll-chapter-stage" id="scroll-stage-vault" data-time="03:30 PM">
-            <div class="chapter-glass-card">
-              <div class="chapter-meta-tag meta-vault">
-                <span>🚗</span> Chapter 04 &bull; 03:30 PM &bull; Fleet &amp; Insurance Vault
-              </div>
-              <h2 class="chapter-title">Vehicles, Battery Health &amp; Insurance Policy Vault.</h2>
-              <p class="chapter-desc">
-                From battery health diagnostics to zero-depreciation insurance renewals, your vehicle fleet is managed with zero broker spam. Parents' senior citizen medical policies indexed for maximum Section 80D tax deductions.
-              </p>
-
               <div class="chapter-data-box">
                 <div class="data-box-row">
-                  <span class="data-key">Kia EV6 20,000 km Service</span>
-                  <span class="data-val">Battery SoH: 98.4% (Optimal)</span>
+                  <span class="data-key">SBI Green Home Loan (8.50%)</span>
+                  <span class="data-val">₹64,200 / month</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">HDFC ERGO Zero-Dep Car Policy</span>
-                  <span class="data-val emerald">Active &bull; ₹28,400 Premium</span>
+                  <span class="data-key">Prepayment Freedom Year</span>
+                  <span class="data-val purple" id="debt-years-saved">3.4 Years Early (2033)</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Parents' Senior Citizen Mediclaim</span>
-                  <span class="data-val">Star Health ₹25L Cover</span>
+                  <span class="data-key">Total Bank Interest Saved</span>
+                  <span class="data-val emerald" id="debt-interest-saved">₹14.6 Lakhs Saved</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Section 80D Tax Benefit</span>
+                  <span class="data-key">Parents' Mediclaim Sec 80D Tax</span>
                   <span class="data-val emerald">₹15,600 Direct Tax Saved</span>
                 </div>
               </div>
 
               <div class="ai-copilot-callout">
-                <span class="ai-copilot-badge">VAULT SECURITY</span>
+                <span class="ai-copilot-badge">RECOMMENDATION</span>
                 <div>
-                  "All vehicle RC copies, insurance endorsements, and health test reports are encrypted under AWS KMS 256-bit envelope keys in AWS Mumbai (ap-south-1)."
+                  "Prepaying the 9.1% car loan first yields a risk-free 9.1% return before accelerating the tax-deductible home loan."
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Chapter 5: 20:00 PM — Sovereign Compounding (EPF & PPF) -->
-          <section class="scroll-chapter-stage" id="scroll-stage-statutory" data-time="08:00 PM">
-            <div class="chapter-glass-card">
-              <div class="chapter-meta-tag meta-statutory">
-                <span>🛡️</span> Chapter 05 &bull; 08:00 PM &bull; Sovereign Compounding
+          <!-- Chapter 4: 18:30 PM — Special Days, Gold & Festive Sinking Funds -->
+          <section class="scroll-chapter-stage" id="scroll-stage-festive" data-time="06:30 PM">
+            <div class="chapter-glass-card highlight-covered">
+              <div class="chapter-meta-tag meta-utility">
+                <span>🪔</span> Chapter 04 &bull; 06:30 PM &bull; Special Days &amp; Festive Sinking Funds
               </div>
-              <h2 class="chapter-title">Statutory Sovereign Compounding: EPF, PPF &amp; CAS Sync.</h2>
+              <h2 class="chapter-title">The Calendar Trap: Diwali, Gold, Vacations &amp; Family Milestones.</h2>
               <p class="chapter-desc">
-                India’s sovereign compounding instruments are among the most generous wealth accumulators in the world. ShrewdHQ tracks EPF 8.25% accruals, enforces the PPF 5th-of-month deposit rule, and parses CAMS/KFintech CAS statements without third-party scrapers.
+                Diwali gifts, wedding season clothes, summer vacations to Ladakh, parents' 40th anniversary, and Dhanteras gold. In an Indian home, these aren't emergencies—they happen every single year. Yet, without a dedicated sinking fund, they consistently wipe out savings or trigger high-interest credit card EMIs.
               </p>
+
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> The Daily Struggle
+                  </div>
+                  <div class="struggle-text">
+                    Festive expenses hit all at once in October/November. Families dip into emergency funds or pay 15% making charges on physical jewellery rather than evaluating sovereign gold bonds or digital gold.
+                  </div>
+                </div>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> How ShrewdHQ Has It Covered
+                  </div>
+                  <div class="covered-text">
+                    The Calendar &amp; Milestone Vault automatically aggregates your family's annual special days and ring-fences a calm monthly sinking fund into liquid high-yield buffers. Zero debt, 100% festive abundance.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Festive Sinking Fund Calculator -->
+              <div class="festive-sinking-calc">
+                <div class="festive-calc-header">
+                  <span>Interactive Sinking Fund Planner</span>
+                  <span id="festive-annual-total" style="color: #d97706; font-weight: 800;">₹2,20,000 Sinking Fund</span>
+                </div>
+
+                <div class="festive-checkbox-list">
+                  <label class="festive-check-label">
+                    <input type="checkbox" class="festive-checkbox" data-amount="75000" checked>
+                    <span>🪔 Diwali &amp; Festive Gifts</span>
+                    <span class="festive-check-amount">₹75k</span>
+                  </label>
+                  <label class="festive-check-label">
+                    <input type="checkbox" class="festive-checkbox" data-amount="80000" checked>
+                    <span>✈️ Annual Family Vacation</span>
+                    <span class="festive-check-amount">₹80k</span>
+                  </label>
+                  <label class="festive-check-label">
+                    <input type="checkbox" class="festive-checkbox" data-amount="35000" checked>
+                    <span>🎂 Anniversaries &amp; Birthdays</span>
+                    <span class="festive-check-amount">₹35k</span>
+                  </label>
+                  <label class="festive-check-label">
+                    <input type="checkbox" class="festive-checkbox" data-amount="30000" checked>
+                    <span>👑 Dhanteras Sovereign Gold</span>
+                    <span class="festive-check-amount">₹30k</span>
+                  </label>
+                </div>
+
+                <div class="festive-calc-result-row">
+                  <span class="data-key">Automated Monthly Sinking Fund</span>
+                  <span class="data-val emerald" id="festive-monthly-reserve">₹18,333 / month</span>
+                </div>
+              </div>
+
+              <div class="ai-copilot-callout">
+                <span class="ai-copilot-badge">AI HORIZON</span>
+                <div>
+                  "Pre-funding ₹18,333/month completely eliminates festive credit card borrowing, saving your household an estimated ₹32,000 in financing charges."
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Chapter 5: 21:00 PM — Evaluating Investments, EPF 8.25% & The PPF 5th Rule -->
+          <section class="scroll-chapter-stage" id="scroll-stage-statutory" data-time="09:00 PM">
+            <div class="chapter-glass-card highlight-covered">
+              <div class="chapter-meta-tag meta-statutory">
+                <span>🛡️</span> Chapter 05 &bull; 09:00 PM &bull; Investments &amp; Sovereign Compounding
+              </div>
+              <h2 class="chapter-title">Evaluating Investments: 18 Scattered SIPs &amp; The PPF 5th Rule.</h2>
+              <p class="chapter-desc">
+                Sitting on the sofa after dinner, you open three different investment apps (Groww, Zerodha, Kuvera). You have 18 different mutual fund schemes started over 8 years. Are they all holding the exact same 50 stocks with high expense ratios? And did you remember to deposit into PPF before the 5th of this month?
+              </p>
+
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> The Daily Struggle
+                  </div>
+                  <div class="struggle-text">
+                    Heavy portfolio overlap between large-cap and flexi-cap mutual funds eating returns in hidden commissions. Depositing into PPF on the 6th means losing an entire month of compounding. Old EPF passbooks from previous employers remain unlinked.
+                  </div>
+                </div>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> How ShrewdHQ Has It Covered
+                  </div>
+                  <div class="covered-text">
+                    Consolidated Account Statement (CAS) parsed locally with zero scrapers. The PPF 5th-of-month alert triggers 3 days in advance, locking in 7.10% sovereign accrual. All past EPF passbooks (8.25%) tracked in a single sovereign compounding ledger.
+                  </div>
+                </div>
+              </div>
 
               <div class="chapter-data-box">
                 <div class="data-box-row">
-                  <span class="data-key">Combined EPF Passbook Balance</span>
-                  <span class="data-val">₹42,60,000 @ 8.25% Sovereign</span>
+                  <span class="data-key">Combined EPF Sovereign Balance</span>
+                  <span class="data-val">₹42,60,000 @ 8.25% Annual</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">PPF 5th-of-Month Rule Alert</span>
-                  <span class="data-val" style="color: #d97706;">Action: Deposit ₹1.5L by Nov 5</span>
+                  <span class="data-key">PPF 5th-of-Month Compounding</span>
+                  <span class="data-val emerald">₹887 / mo Sovereign Interest Locked</span>
                 </div>
                 <div class="data-box-row">
                   <span class="data-key">Corporate NPS (Sec 80CCD(2))</span>
-                  <span class="data-val">14% Basic Shield Active</span>
+                  <span class="data-val">14% Basic Tax Shield Active</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Consolidated CAS Mutual Funds</span>
-                  <span class="data-val emerald">14 Schemes Auto-Reconciled</span>
+                  <span class="data-key">CAS Mutual Fund Overlap Cleaned</span>
+                  <span class="data-val emerald">14 Overlapping Funds Streamlined</span>
                 </div>
               </div>
 
               <div class="ai-copilot-callout">
                 <span class="ai-copilot-badge">COMPOUNDING ENGINE</span>
                 <div>
-                  "Depositing ₹1.5L into your PPF before November 5 captures an extra month of 7.10% compounding, generating ₹887 in sovereign tax-free interest this month alone."
+                  "Depositing ₹1.5L before November 5 captures an extra month of sovereign accrual. Over 15 years, the PPF 5th-rule alone generates ₹1.62 Lakhs in tax-free interest."
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Chapter 6: 22:30 PM — The Consolidated Family Horizon -->
-          <section class="scroll-chapter-stage" id="scroll-stage-copilot" data-time="10:30 PM">
-            <div class="chapter-glass-card">
+          <!-- Chapter 6: 23:00 PM — Bedtime Equanimity: ShrewdHQ Has It All Covered -->
+          <section class="scroll-chapter-stage" id="scroll-stage-copilot" data-time="11:00 PM">
+            <div class="chapter-glass-card highlight-covered">
               <div class="chapter-meta-tag meta-copilot">
-                <span>🌙</span> Chapter 06 &bull; 10:30 PM &bull; The Family Horizon
+                <span>🌙</span> Chapter 06 &bull; 11:00 PM &bull; Complete Sovereign Peace
               </div>
-              <h2 class="chapter-title">Quiet Evening Check-In &amp; Household AI Copilot.</h2>
+              <h2 class="chapter-title">Bedtime Equanimity: Both Partners Sleep Peacefully.</h2>
               <p class="chapter-desc">
-                A quiet evening with zero financial anxiety. No arguments over grocery receipts or hidden bank fees. Full multi-member privacy where parents retain sovereign control while sharing total household clarity.
+                11:00 PM. Laptops closed. No tension about tomorrow’s bills, no disputes over domestic expenses, no hidden bank surprises. The entire household operates with mathematical precision and complete sovereign privacy.
               </p>
+
+              <div class="struggle-vs-covered-grid">
+                <div class="struggle-card-block">
+                  <div class="struggle-header">
+                    <span>🔴</span> Before ShrewdHQ
+                  </div>
+                  <div class="struggle-text">
+                    Mental exhaustion. Spouses arguing over who spent what on groceries. Fear of unexpected expenses. Confusion over whether retirement and children's college are actually funded.
+                  </div>
+                </div>
+
+                <div class="covered-card-block">
+                  <div class="covered-header">
+                    <span>🟢</span> With ShrewdHQ OS
+                  </div>
+                  <div class="covered-text">
+                    Total clarity. 24.2 months of liquid family runway. Educational, festive, and debt schedules fully automated. Private KMS encryption under AWS Mumbai. ShrewdHQ has all of it covered.
+                  </div>
+                </div>
+              </div>
 
               <div class="chapter-data-box">
                 <div class="data-box-row">
@@ -370,7 +535,7 @@
                   <span class="data-val emerald">24.2 Months Emergency Cover</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">Child 2036 Ivy League / BITS Goal</span>
+                  <span class="data-key">Child 2036 BITS / Ivy League Fund</span>
                   <span class="data-val">38.4% Funded (On Target)</span>
                 </div>
                 <div class="data-box-row">
@@ -378,15 +543,15 @@
                   <span class="data-val purple">Year 2033 (7 Yrs Ahead of Banks)</span>
                 </div>
                 <div class="data-box-row">
-                  <span class="data-key">AI Modeling Query</span>
-                  <span class="data-val emerald">"Can we upgrade SUV?" &rarr; Safe</span>
+                  <span class="data-key">AI Query: "Can We Upgrade Car?"</span>
+                  <span class="data-val emerald">Safe (Surplus: ₹14.8L Buffer)</span>
                 </div>
               </div>
 
               <div class="ai-copilot-callout">
-                <span class="ai-copilot-badge">AI HORIZON</span>
+                <span class="ai-copilot-badge">SOVEREIGN STATE</span>
                 <div>
-                  "Household state is in complete equilibrium. Sleep soundly knowing all sovereign, educational, and debt schedules are fully choreographed."
+                  "The household is in complete equilibrium. Rest soundly knowing your family's financial architecture is guarded 24/7."
                 </div>
               </div>
             </div>
@@ -404,7 +569,7 @@
           <div class="founding-kicker">Under Private Construction &bull; Cohort 1</div>
           <h2 class="founding-title">Reserve Founding Household Membership</h2>
           <p class="founding-desc">
-            We are engineering the production release of ShrewdHQ OS for discerning Indian households. Members receive zero-telemetry private enclaves, client-side automated statement parsers, and dedicated concierge onboarding.
+            We are engineering the production release of ShrewdHQ OS for discerning Indian households. Founding members receive zero-telemetry private enclaves, client-side automated statement parsers, and dedicated concierge onboarding.
           </p>
 
           <form class="founding-form" id="founding-form">
