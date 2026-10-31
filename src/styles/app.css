@@ -763,6 +763,39 @@ body {
   color: var(--text-secondary);
 }
 
+/* Interactive Smart Card Category Buttons */
+.card-category-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.btn-card-cat {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-medium);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-card-cat:hover {
+  border-color: var(--emerald);
+  background: #f0fdf4;
+}
+
+.btn-card-cat.active {
+  background: var(--emerald);
+  color: #ffffff;
+  border-color: var(--emerald);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
 .festive-calc-result-row {
   display: flex;
   justify-content: space-between;

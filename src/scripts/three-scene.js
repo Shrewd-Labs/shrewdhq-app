@@ -280,142 +280,270 @@ export class Household3DScene {
     this.scene.add(stage2);
     this.stageGroups.push(stage2);
 
-    // ── STAGE 3: The Debt Freedom Scale & Prepayment Block ──────────────────
+    // ── STAGE 3: Subscriptions Audit & Appliance Warranties ──────────────────
     const stage3 = new THREE.Group();
-    stage3.name = 'stage-3-debt';
+    stage3.name = 'stage-3-subscriptions';
 
-    // Balance Scale Base & Pillar
-    const baseGeo = new THREE.CylinderGeometry(1.4, 1.6, 0.3, 32);
-    const baseMesh = new THREE.Mesh(baseGeo, obsidianMat);
-    baseMesh.position.set(0, -2.5, 0);
-    stage3.add(baseMesh);
+    // Digital Appliance Warranty Smart Capsule
+    const capsuleBodyGeo = new THREE.CylinderGeometry(0.7, 0.7, 2.2, 32);
+    const capsuleTopGeo = new THREE.SphereGeometry(0.7, 32, 16);
+    const capsuleTop = new THREE.Mesh(capsuleTopGeo, brushedGoldMat);
+    capsuleTop.position.set(-1.0, 1.1, 0);
+    stage3.add(capsuleTop);
 
-    const pillarGeo = new THREE.CylinderGeometry(0.14, 0.14, 4.2, 16);
-    const pillarMesh = new THREE.Mesh(pillarGeo, brushedGoldMat);
-    pillarMesh.position.set(0, -0.5, 0);
-    stage3.add(pillarMesh);
+    const capsuleBottom = new THREE.Mesh(capsuleTopGeo, brushedGoldMat);
+    capsuleBottom.position.set(-1.0, -1.1, 0);
+    stage3.add(capsuleBottom);
 
-    // Balance Scale Beam (Tilts dynamically based on prepayments)
-    const beamGeo = new THREE.BoxGeometry(5.4, 0.16, 0.25);
-    this.stage3Beam = new THREE.Mesh(beamGeo, brushedGoldMat);
-    this.stage3Beam.position.set(0, 1.4, 0);
-    stage3.add(this.stage3Beam);
+    this.stage3CapsuleMat = new THREE.MeshStandardMaterial({
+      color: 0x059669,
+      emissive: 0x10b981,
+      emissiveIntensity: 0.3,
+      metalness: 0.8,
+      roughness: 0.2
+    });
+    const capsuleBody = new THREE.Mesh(capsuleBodyGeo, this.stage3CapsuleMat);
+    capsuleBody.position.set(-1.0, 0, 0);
+    stage3.add(capsuleBody);
 
-    // Left Pan: Bank Interest Weight (Struggle)
-    const panGeo = new THREE.CylinderGeometry(1.0, 0.8, 0.2, 24);
-    const leftPan = new THREE.Mesh(panGeo, obsidianMat);
-    leftPan.position.set(-2.2, 0.4, 0);
-    this.stage3LeftPan = leftPan;
-    stage3.add(leftPan);
+    // Concentric Orbital Subscription Toggle Rings
+    const subRing1Geo = new THREE.TorusGeometry(1.7, 0.06, 16, 64);
+    this.stage3RingMat = new THREE.MeshStandardMaterial({
+      color: 0x10b981,
+      roughness: 0.3,
+      metalness: 0.7
+    });
+    const subRing1 = new THREE.Mesh(subRing1Geo, this.stage3RingMat);
+    subRing1.position.set(-1.0, 0, 0);
+    stage3.add(subRing1);
+    this.stage3SubRing1 = subRing1;
 
-    // Right Pan: Prepayment Freedom Gold Block (Covered)
-    const rightPan = new THREE.Mesh(panGeo, obsidianMat);
-    rightPan.position.set(2.2, 0.4, 0);
-    this.stage3RightPan = rightPan;
-    stage3.add(rightPan);
+    const subRing2Geo = new THREE.TorusGeometry(2.3, 0.05, 16, 64);
+    const subRing2 = new THREE.Mesh(subRing2Geo, brushedGoldMat);
+    subRing2.position.set(-1.0, 0, 0);
+    subRing2.rotation.x = Math.PI / 3;
+    stage3.add(subRing2);
+    this.stage3SubRing2 = subRing2;
 
-    // Gold Ingot Block sitting on right pan
-    const goldIngotGeo = new THREE.BoxGeometry(1.2, 0.6, 0.8);
-    const goldIngot = new THREE.Mesh(goldIngotGeo, brushedGoldMat);
-    goldIngot.position.set(2.2, 0.8, 0);
-    this.stage3Ingot = goldIngot;
-    stage3.add(goldIngot);
+    // Floating Holographic Warranty Certificate Shield
+    const certGeo = new THREE.BoxGeometry(2.6, 3.4, 0.08);
+    const cert = new THREE.Mesh(certGeo, glassMat);
+    cert.position.set(1.4, 0.1, 0.4);
+    cert.rotation.y = -0.2;
+    stage3.add(cert);
 
     stage3.visible = false;
     this.scene.add(stage3);
     this.stageGroups.push(stage3);
 
-    // ── STAGE 4: The Celebration Diya & Sovereign Gold Coin ─────────────────
+    // ── STAGE 4: The Debt Freedom Scale & Prepayment Block ──────────────────
     const stage4 = new THREE.Group();
-    stage4.name = 'stage-4-festive';
+    stage4.name = 'stage-4-debt';
+
+    // Balance Scale Base & Pillar
+    const baseGeo = new THREE.CylinderGeometry(1.4, 1.6, 0.3, 32);
+    const baseMesh = new THREE.Mesh(baseGeo, obsidianMat);
+    baseMesh.position.set(0, -2.5, 0);
+    stage4.add(baseMesh);
+
+    const pillarGeo = new THREE.CylinderGeometry(0.14, 0.14, 4.2, 16);
+    const pillarMesh = new THREE.Mesh(pillarGeo, brushedGoldMat);
+    pillarMesh.position.set(0, -0.5, 0);
+    stage4.add(pillarMesh);
+
+    // Balance Scale Beam (Tilts dynamically based on prepayments)
+    const beamGeo = new THREE.BoxGeometry(5.4, 0.16, 0.25);
+    this.stage4Beam = new THREE.Mesh(beamGeo, brushedGoldMat);
+    this.stage4Beam.position.set(0, 1.4, 0);
+    stage4.add(this.stage4Beam);
+
+    // Left Pan: Bank Interest Weight (Struggle)
+    const panGeo = new THREE.CylinderGeometry(1.0, 0.8, 0.2, 24);
+    const leftPan = new THREE.Mesh(panGeo, obsidianMat);
+    leftPan.position.set(-2.2, 0.4, 0);
+    this.stage4LeftPan = leftPan;
+    stage4.add(leftPan);
+
+    // Right Pan: Prepayment Freedom Gold Block (Covered)
+    const rightPan = new THREE.Mesh(panGeo, obsidianMat);
+    rightPan.position.set(2.2, 0.4, 0);
+    this.stage4RightPan = rightPan;
+    stage4.add(rightPan);
+
+    // Gold Ingot Block sitting on right pan
+    const goldIngotGeo = new THREE.BoxGeometry(1.2, 0.6, 0.8);
+    const goldIngot = new THREE.Mesh(goldIngotGeo, brushedGoldMat);
+    goldIngot.position.set(2.2, 0.8, 0);
+    this.stage4Ingot = goldIngot;
+    stage4.add(goldIngot);
+
+    stage4.visible = false;
+    this.scene.add(stage4);
+    this.stageGroups.push(stage4);
+
+    // ── STAGE 5: Smart Card Optimizer & Holographic Reward Radar ─────────────
+    const stage5 = new THREE.Group();
+    stage5.name = 'stage-5-cards';
+
+    // Premium 3D Titanium Credit Card
+    const cardShape = new THREE.Shape();
+    const w = 3.8, h = 2.4, r = 0.18;
+    cardShape.moveTo(-w/2 + r, -h/2);
+    cardShape.lineTo(w/2 - r, -h/2);
+    cardShape.quadraticCurveTo(w/2, -h/2, w/2, -h/2 + r);
+    cardShape.lineTo(w/2, h/2 - r);
+    cardShape.quadraticCurveTo(w/2, h/2, w/2 - r, h/2);
+    cardShape.lineTo(-w/2 + r, h/2);
+    cardShape.quadraticCurveTo(-w/2, h/2, -w/2, h/2 - r);
+    cardShape.lineTo(-w/2, -h/2 + r);
+    cardShape.quadraticCurveTo(-w/2, -h/2, -w/2 + r, -h/2);
+
+    const cardExtrude = { depth: 0.08, bevelEnabled: true, bevelSegments: 2, steps: 1, bevelSize: 0.02, bevelThickness: 0.02 };
+    const creditCardGeo = new THREE.ExtrudeGeometry(cardShape, cardExtrude);
+    creditCardGeo.center();
+
+    const titaniumCardMat = new THREE.MeshStandardMaterial({
+      color: 0x0f172a,
+      metalness: 0.9,
+      roughness: 0.2
+    });
+    const cardMesh = new THREE.Mesh(creditCardGeo, titaniumCardMat);
+    cardMesh.position.set(-0.2, -0.6, 0);
+    cardMesh.rotation.x = 0.35;
+    cardMesh.rotation.y = -0.2;
+    stage5.add(cardMesh);
+
+    // EMV Golden Chip on Card
+    const chipGeo5 = new THREE.BoxGeometry(0.65, 0.5, 0.02);
+    const chip5 = new THREE.Mesh(chipGeo5, brushedGoldMat);
+    chip5.position.set(-1.1, -0.5, 0.15);
+    chip5.rotation.x = 0.35;
+    chip5.rotation.y = -0.2;
+    stage5.add(chip5);
+
+    // Floating Holographic Reward Gem (Octahedron crystal)
+    const gemGeo = new THREE.OctahedronGeometry(0.85, 0);
+    this.stage5GemMat = new THREE.MeshStandardMaterial({
+      color: 0x10b981,
+      emissive: 0x059669,
+      emissiveIntensity: 0.6,
+      roughness: 0.1,
+      metalness: 0.5
+    });
+    const gemMesh = new THREE.Mesh(gemGeo, this.stage5GemMat);
+    gemMesh.position.set(0.6, 1.4, 0.8);
+    stage5.add(gemMesh);
+    this.stage5Gem = gemMesh;
+
+    // Proactive Reward Expiry Radar Rings
+    const radarGeo = new THREE.RingGeometry(0.9, 1.0, 32);
+    this.stage5RadarMat = new THREE.MeshBasicMaterial({
+      color: 0x10b981,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.7
+    });
+    const radarRing = new THREE.Mesh(radarGeo, this.stage5RadarMat);
+    radarRing.position.set(0.6, 1.4, 0.8);
+    radarRing.rotation.x = Math.PI / 2.5;
+    stage5.add(radarRing);
+    this.stage5RadarRing = radarRing;
+
+    stage5.visible = false;
+    this.scene.add(stage5);
+    this.stageGroups.push(stage5);
+
+    // ── STAGE 6: The Celebration Diya & Sovereign Gold Coin ─────────────────
+    const stage6 = new THREE.Group();
+    stage6.name = 'stage-6-festive';
 
     // Traditional Brass Diya Base
     const diyaBaseGeo = new THREE.CylinderGeometry(1.8, 0.6, 0.6, 32);
     const diyaMesh = new THREE.Mesh(diyaBaseGeo, brushedGoldMat);
     diyaMesh.position.set(-1.2, -0.6, 0);
-    stage4.add(diyaMesh);
+    stage6.add(diyaMesh);
 
     // Diya Oil Bowl Interior
     const bowlGeo = new THREE.CylinderGeometry(1.6, 1.4, 0.3, 32);
     const bowlMesh = new THREE.Mesh(bowlGeo, obsidianMat);
     bowlMesh.position.set(-1.2, -0.35, 0);
-    stage4.add(bowlMesh);
+    stage6.add(bowlMesh);
 
     // Glowing Flame (Pulsates in animation loop)
     const flameGeo = new THREE.ConeGeometry(0.35, 0.9, 16);
     this.flameMat = new THREE.MeshBasicMaterial({ color: 0xffedd5 });
     const flameMesh = new THREE.Mesh(flameGeo, this.flameMat);
     flameMesh.position.set(-1.2, 0.25, 0);
-    stage4.add(flameMesh);
-    this.stage4Flame = flameMesh;
+    stage6.add(flameMesh);
+    this.stage6Flame = flameMesh;
 
     // Warm Ambient Flame Light
     this.flameLight = new THREE.PointLight(0xf59e0b, 3.5, 8);
     this.flameLight.position.set(-1.2, 0.4, 0);
-    stage4.add(this.flameLight);
+    stage6.add(this.flameLight);
 
     // Sovereign Gold Coin (24 Karat Hallmark Coin)
     const goldCoinGeo = new THREE.CylinderGeometry(1.4, 1.4, 0.2, 48);
     const goldCoin = new THREE.Mesh(goldCoinGeo, brushedGoldMat);
     goldCoin.position.set(1.4, 0.2, 0.4);
     goldCoin.rotation.x = Math.PI / 3;
-    stage4.add(goldCoin);
-    this.stage4GoldCoin = goldCoin;
+    stage6.add(goldCoin);
+    this.stage6GoldCoin = goldCoin;
 
     // Sinking Fund Pedestal
     const pedestalGeo = new THREE.CylinderGeometry(1.8, 2.0, 0.5, 32);
     const pedestalMesh = new THREE.Mesh(pedestalGeo, obsidianMat);
     pedestalMesh.position.set(1.4, -0.8, 0.4);
-    stage4.add(pedestalMesh);
+    stage6.add(pedestalMesh);
 
-    stage4.visible = false;
-    this.scene.add(stage4);
-    this.stageGroups.push(stage4);
+    stage6.visible = false;
+    this.scene.add(stage6);
+    this.stageGroups.push(stage6);
 
-    // ── STAGE 5: The Sovereign Triad Compounding Rings ───────────────────────
-    const stage5 = new THREE.Group();
-    stage5.name = 'stage-5-invest';
+    // ── STAGE 7: The Sovereign Triad Compounding Rings ───────────────────────
+    const stage7 = new THREE.Group();
+    stage7.name = 'stage-7-invest';
 
     // Ring 1: EPF 8.25% Sovereign Yield (Outer Brass Ring)
     const epfRingGeo = new THREE.TorusGeometry(2.8, 0.12, 16, 64);
     const epfRing = new THREE.Mesh(epfRingGeo, brushedGoldMat);
-    stage5.add(epfRing);
-    this.stage5EpfRing = epfRing;
+    stage7.add(epfRing);
+    this.stage7EpfRing = epfRing;
 
     // Ring 2: PPF 7.10% Sovereign Tax-Free (Middle Emerald Ring)
     const ppfRingGeo = new THREE.TorusGeometry(2.1, 0.12, 16, 64);
     const ppfRing = new THREE.Mesh(ppfRingGeo, emeraldGlowMat);
     ppfRing.rotation.x = Math.PI / 4;
-    stage5.add(ppfRing);
-    this.stage5PpfRing = ppfRing;
+    stage7.add(ppfRing);
+    this.stage7PpfRing = ppfRing;
 
     // Ring 3: Mutual Funds & Equity (Inner Titanium Ring)
     const mfRingGeo = new THREE.TorusGeometry(1.4, 0.12, 16, 64);
     const mfRing = new THREE.Mesh(mfRingGeo, obsidianMat);
     mfRing.rotation.y = Math.PI / 3;
-    stage5.add(mfRing);
-    this.stage5MfRing = mfRing;
+    stage7.add(mfRing);
+    this.stage7MfRing = mfRing;
 
     // Central 5th-of-the-Month Lock Core (Clicks shut when interest is locked)
     const lockCoreGeo = new THREE.CylinderGeometry(0.6, 0.6, 0.4, 32);
-    this.stage5LockMat = new THREE.MeshStandardMaterial({
+    this.stage7LockMat = new THREE.MeshStandardMaterial({
       color: 0x10b981,
       emissive: 0x059669,
       emissiveIntensity: 0.6,
       roughness: 0.2
     });
-    const lockCore = new THREE.Mesh(lockCoreGeo, this.stage5LockMat);
+    const lockCore = new THREE.Mesh(lockCoreGeo, this.stage7LockMat);
     lockCore.rotation.x = Math.PI / 2;
-    stage5.add(lockCore);
-    this.stage5LockCore = lockCore;
+    stage7.add(lockCore);
+    this.stage7LockCore = lockCore;
 
-    stage5.visible = false;
-    this.scene.add(stage5);
-    this.stageGroups.push(stage5);
+    stage7.visible = false;
+    this.scene.add(stage7);
+    this.stageGroups.push(stage7);
 
-    // ── STAGE 6: The Master Protected Enclave (24.2 Mo Runway) ──────────────
-    const stage6 = new THREE.Group();
-    stage6.name = 'stage-6-protected';
+    // ── STAGE 8: Master Protected Monolith & Family Runway ───────────────────
+    const stage8 = new THREE.Group();
+    stage8.name = 'stage-8-protected';
 
     // Central Emerald Monolith
     const monolithGeo = new THREE.BoxGeometry(2.4, 4.4, 0.8);
@@ -428,14 +556,14 @@ export class Household3DScene {
       metalness: 0.2
     });
     const monolith = new THREE.Mesh(monolithGeo, monolithMat);
-    stage6.add(monolith);
+    stage8.add(monolith);
 
     // Golden Halo Ring crowning the monolith
     const haloGeo = new THREE.TorusGeometry(2.0, 0.08, 16, 64);
     const halo = new THREE.Mesh(haloGeo, brushedGoldMat);
     halo.position.set(0, 2.4, 0);
     halo.rotation.x = Math.PI / 2;
-    stage6.add(halo);
+    stage8.add(halo);
 
     // Protective Sovereign Geodesic Sphere Aura
     const domeGeo = new THREE.IcosahedronGeometry(4.2, 2);
@@ -446,12 +574,12 @@ export class Household3DScene {
       opacity: 0.35
     });
     const dome = new THREE.Mesh(domeGeo, domeMat);
-    stage6.add(dome);
-    this.stage6Dome = dome;
+    stage8.add(dome);
+    this.stage8Dome = dome;
 
-    stage6.visible = false;
-    this.scene.add(stage6);
-    this.stageGroups.push(stage6);
+    stage8.visible = false;
+    this.scene.add(stage8);
+    this.stageGroups.push(stage8);
   }
 
   setStateMode(mode) {
@@ -471,19 +599,37 @@ export class Household3DScene {
       this.stage2BadgeMat.color.setHex(mode === 'struggle' ? 0xf59e0b : 0x10b981);
     }
 
-    // Update Stage 3 Scale Tilt: Struggle tilts toward heavy interest; Covered tips toward gold freedom!
-    if (this.stage3Beam) {
-      const targetTilt = mode === 'struggle' ? 0.22 : -0.22;
-      this.stage3Beam.rotation.z = targetTilt;
-      if (this.stage3LeftPan) this.stage3LeftPan.position.y = 0.4 - targetTilt * 2.2;
-      if (this.stage3RightPan) this.stage3RightPan.position.y = 0.4 + targetTilt * 2.2;
-      if (this.stage3Ingot) this.stage3Ingot.position.y = 0.8 + targetTilt * 2.2;
+    // Update Stage 3 Subscriptions & Warranty Capsule
+    if (this.stage3CapsuleMat) {
+      this.stage3CapsuleMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x059669);
+      this.stage3CapsuleMat.emissive.setHex(mode === 'struggle' ? 0x991b1b : 0x10b981);
+    }
+    if (this.stage3RingMat) {
+      this.stage3RingMat.color.setHex(mode === 'struggle' ? 0xf59e0b : 0x10b981);
     }
 
-    // Update Stage 5 Lock Core
-    if (this.stage5LockMat) {
-      this.stage5LockMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x10b981);
-      this.stage5LockMat.emissive.setHex(mode === 'struggle' ? 0xb91c1c : 0x059669);
+    // Update Stage 4 Scale Tilt: Struggle tilts toward heavy interest; Covered tips toward gold freedom!
+    if (this.stage4Beam) {
+      const targetTilt = mode === 'struggle' ? 0.22 : -0.22;
+      this.stage4Beam.rotation.z = targetTilt;
+      if (this.stage4LeftPan) this.stage4LeftPan.position.y = 0.4 - targetTilt * 2.2;
+      if (this.stage4RightPan) this.stage4RightPan.position.y = 0.4 + targetTilt * 2.2;
+      if (this.stage4Ingot) this.stage4Ingot.position.y = 0.8 + targetTilt * 2.2;
+    }
+
+    // Update Stage 5 Smart Card & Reward Gem
+    if (this.stage5GemMat) {
+      this.stage5GemMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x10b981);
+      this.stage5GemMat.emissive.setHex(mode === 'struggle' ? 0xb91c1c : 0x059669);
+    }
+    if (this.stage5RadarMat) {
+      this.stage5RadarMat.color.setHex(mode === 'struggle' ? 0xf59e0b : 0x10b981);
+    }
+
+    // Update Stage 7 Lock Core
+    if (this.stage7LockMat) {
+      this.stage7LockMat.color.setHex(mode === 'struggle' ? 0xef4444 : 0x10b981);
+      this.stage7LockMat.emissive.setHex(mode === 'struggle' ? 0xb91c1c : 0x059669);
     }
 
     // Update Rim Light atmosphere
@@ -531,7 +677,6 @@ export class Household3DScene {
     this.camera.lookAt(0, 0, 0);
 
     // 2. Stage Interpolation & Visibility Blending based on Scroll Progress
-    // We have 7 stages (0 to 6).
     const numStages = this.stageGroups.length;
     const stageIndexFloat = this.scrollProgress * (numStages - 1);
     const activeIndex = Math.min(Math.floor(stageIndexFloat), numStages - 1);
@@ -572,25 +717,44 @@ export class Household3DScene {
       this.stage2Coin.rotation.z = Math.sin(t * 1.5) * 0.2;
     }
 
-    // Stage 4: Diya Flame flicker
-    if (this.stage4Flame && this.flameLight) {
+    // Stage 3: Subscriptions & Warranty Capsule
+    if (this.stage3SubRing1) {
+      this.stage3SubRing1.rotation.x = t * 0.5;
+    }
+    if (this.stage3SubRing2) {
+      this.stage3SubRing2.rotation.y = t * 0.4;
+    }
+
+    // Stage 5: Smart Card & Holographic Gem
+    if (this.stage5Gem) {
+      this.stage5Gem.rotation.y = t * 1.2;
+      this.stage5Gem.rotation.x = Math.sin(t * 1.8) * 0.25;
+    }
+    if (this.stage5RadarRing) {
+      const pulse5 = (Math.sin(t * 3.5) + 1) * 0.5;
+      this.stage5RadarRing.scale.setScalar(1 + pulse5 * 0.5);
+      this.stage5RadarRing.material.opacity = Math.max(0, 0.8 - pulse5 * 0.6);
+    }
+
+    // Stage 6: Diya Flame flicker
+    if (this.stage6Flame && this.flameLight) {
       const flicker = Math.sin(t * 12.0) * 0.06 + Math.cos(t * 7.0) * 0.04;
-      this.stage4Flame.scale.set(1 + flicker, 1 + flicker * 1.5, 1 + flicker);
+      this.stage6Flame.scale.set(1 + flicker, 1 + flicker * 1.5, 1 + flicker);
       this.flameLight.intensity = 3.5 + flicker * 5.0;
     }
-    if (this.stage4GoldCoin) {
-      this.stage4GoldCoin.rotation.z = t * 0.4;
+    if (this.stage6GoldCoin) {
+      this.stage6GoldCoin.rotation.z = t * 0.4;
     }
 
-    // Stage 5: Sovereign Compounding Gyroscope Rotations
-    if (this.stage5EpfRing) this.stage5EpfRing.rotation.z = t * 0.3;
-    if (this.stage5PpfRing) this.stage5PpfRing.rotation.x = t * 0.4;
-    if (this.stage5MfRing) this.stage5MfRing.rotation.y = t * 0.5;
+    // Stage 7: Sovereign Compounding Gyroscope Rotations
+    if (this.stage7EpfRing) this.stage7EpfRing.rotation.z = t * 0.3;
+    if (this.stage7PpfRing) this.stage7PpfRing.rotation.x = t * 0.4;
+    if (this.stage7MfRing) this.stage7MfRing.rotation.y = t * 0.5;
 
-    // Stage 6: Geodesic Protective Dome rotation
-    if (this.stage6Dome) {
-      this.stage6Dome.rotation.y = t * 0.2;
-      this.stage6Dome.rotation.x = Math.sin(t * 0.15) * 0.1;
+    // Stage 8: Geodesic Protective Dome rotation
+    if (this.stage8Dome) {
+      this.stage8Dome.rotation.y = t * 0.2;
+      this.stage8Dome.rotation.x = Math.sin(t * 0.15) * 0.1;
     }
 
     // Render Scene

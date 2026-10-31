@@ -25,8 +25,16 @@ const STAGE_STORY_BANNERS = [
     covered: '✅ Staff Payroll AutoPay &bull; Zero Late Fees &bull; Shared View'
   },
   {
+    struggle: '⚠️ ₹8,500 Silent Monthly Leaks &bull; Missing Appliance Warranty Bills',
+    covered: '✨ Autopays Streamlined &bull; 14 Appliance Warranties Active'
+  },
+  {
     struggle: '📈 Home Loan Floating Rate Shock &bull; Policy Expiry Spam',
     covered: '✅ Debt Freedom: 2033 &bull; All Policies Stored Safely'
+  },
+  {
+    struggle: '💳 Wrong Card Swiped at Checkout &bull; 14,200 Points Expiring Soon',
+    covered: '💎 Best Card Recommender &bull; Expiring Rewards Rescued'
   },
   {
     struggle: '⚠️ Festive Cash Crunch &bull; Jeweller 15% Making Charges Trap',
@@ -159,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5. Interactive Debt Prepayment Simulator (Chapter 3)
+  // 5. Interactive Debt Prepayment Simulator (Chapter 4)
   const prepaymentSlider = document.getElementById('slider-prepayment');
   const sliderValLabel = document.getElementById('slider-val-label');
   const yearsSavedLabel = document.getElementById('debt-years-saved');
@@ -178,6 +186,70 @@ document.addEventListener('DOMContentLoaded', () => {
       if (interestSavedLabel) interestSavedLabel.textContent = `₹${interestSavedLakhs} Lakhs Saved`;
     });
   }
+
+  // 5B. Interactive Subscription Leakage Auditor (Chapter 3)
+  const subCheckboxes = document.querySelectorAll('.sub-leak-checkbox');
+  const subLeakTotalLabel = document.getElementById('sub-leak-total');
+  const subAnnualRecoveredLabel = document.getElementById('sub-annual-recovered');
+
+  function calculateSubSavings() {
+    let monthlyTotal = 0;
+    subCheckboxes.forEach((cb) => {
+      if (cb.checked) {
+        monthlyTotal += parseInt(cb.dataset.amount, 10);
+      }
+    });
+    const annualTotal = monthlyTotal * 12;
+    if (subLeakTotalLabel) {
+      subLeakTotalLabel.textContent = `₹${monthlyTotal.toLocaleString('en-IN')} / month Saved`;
+    }
+    if (subAnnualRecoveredLabel) {
+      subAnnualRecoveredLabel.textContent = `₹${annualTotal.toLocaleString('en-IN')} / year`;
+    }
+  }
+  subCheckboxes.forEach((cb) => cb.addEventListener('change', calculateSubSavings));
+
+  // 5C. Interactive Smart Card Optimizer (Chapter 5)
+  const cardCatButtons = document.querySelectorAll('.btn-card-cat');
+  const cardRecBox = document.getElementById('card-recommendation-box');
+  const CARD_RECOMMENDATIONS = {
+    grocery: {
+      label: 'Optimal Choice for Groceries & Supermarkets',
+      card: '5% Unlimited Cashback Card',
+      desc: 'Earns ₹1,250 instant cashback every month on your family’s ₹25,000 grocery bill.'
+    },
+    travel: {
+      label: 'Optimal Choice for Flights & Vacations',
+      card: '10x Sovereign Travel Miles Card',
+      desc: 'Earns 4,800 air miles per booking plus 2 complimentary domestic airport lounge visits.'
+    },
+    dining: {
+      label: 'Optimal Choice for Family Dining & Weekend Cafes',
+      card: 'Dining Delights Titanium Card',
+      desc: 'Unlocks 15% to 20% direct discounts at over 3,500 partner restaurants across India.'
+    },
+    fuel: {
+      label: 'Optimal Choice for Fuel & EV Charging',
+      card: '1% Surcharge Waiver + 4% Fuel Points Card',
+      desc: 'Zero fuel surcharge across all petrol stations and 4% rewards back into your fuel wallet.'
+    }
+  };
+
+  cardCatButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      cardCatButtons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      const data = CARD_RECOMMENDATIONS[cat];
+      if (cardRecBox && data) {
+        cardRecBox.innerHTML = `
+          <div style="font-size: 11px; font-weight: 800; color: var(--emerald-dark); text-transform: uppercase;">${data.label}</div>
+          <div style="font-weight: 700; font-size: 14px; color: var(--text-primary); margin: 2px 0;">${data.card}</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">${data.desc}</div>
+        `;
+      }
+    });
+  });
 
   // 6. Interactive Festive Sinking Fund Calculator (Chapter 4)
   const checkboxes = document.querySelectorAll('.festive-checkbox');
