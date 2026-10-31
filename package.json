@@ -1,0 +1,22 @@
+{
+  "name": "shrewdhq-app",
+  "version": "1.0.0",
+  "description": "ShrewdHQ Private Household Intelligence OS (shrewdhq.app)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "shrewdhq",
+    "wealth-os",
+    "indian-households",
+    "ai-era"
+  ],
+  "author": "Shrewd Labs",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}

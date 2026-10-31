@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShrewdHQ — The Operating System of the Home | Built for the AI Era</title>
+  <meta name="description" content="An intelligent 3D spatial operating system choreographing daily household schedules, school fees, EMIs, vehicle maintenance, domestic staff payroll, and statutory compounding. Built for the AI era.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23059669'/><text x='50' y='68' font-size='56' font-family='system-ui, sans-serif' font-weight='900' fill='white' text-anchor='middle'>S</text></svg>">
+  <link rel="stylesheet" href="./src/styles/app.css">
+</head>
+<body>
+  <!-- Frosted Glass Navigation -->
+  <header class="app-nav">
+    <div class="nav-container">
+      <a href="https://shrewdhq.app" class="brand-wrap">
+        <div class="brand-icon">S</div>
+        <span class="brand-name">ShrewdHQ <span style="font-weight: 400; opacity: 0.8;">OS</span></span>
+        <span class="brand-pill">
+          <span class="pulse-dot"></span>
+          Under Construction
+        </span>
+      </a>
+
+      <div class="nav-right-actions">
+        <a href="https://shrewdhq.in" class="btn-public-site" target="_blank" rel="noopener">
+          Public Marketing Site ↗
+        </a>
+        <a href="#founding-reservation" class="btn-reserve-nav">
+          Founding Household Access
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Stage -->
+  <main>
+    <section class="hero-stage">
+      <div class="hero-kicker-pill">
+        <span>⚡</span> Built for the AI Era &bull; Indian Household Architecture
+      </div>
+      <h1 class="hero-title">
+        The Intelligent <em>Operating System</em> for Running Your Home.
+      </h1>
+      <p class="hero-sub">
+        More than just finance. A living, spatial command center orchestrating school fees, bus Fastags, home loan prepayments, domestic staff payroll, and sovereign EPF/PPF compounding in real time.
+      </p>
+
+      <!-- 24-Hour Interactive Timeline Scrubber -->
+      <div class="timeline-scrubber-wrap">
+        <div class="timeline-header">
+          <div class="timeline-caption">
+            <span>🕒</span> Daily Household Choreography
+          </div>
+          <div class="timeline-clock" id="timeline-clock">07:30 AM</div>
+        </div>
+
+        <div class="timeline-beats">
+          <button type="button" class="btn-beat active" data-beat="07:30" aria-label="Morning Briefing">
+            <span class="beat-time">07:30 AM</span>
+            <span class="beat-label">Morning & School</span>
+          </button>
+          <button type="button" class="btn-beat" data-beat="11:00" aria-label="Banking and EMIs">
+            <span class="beat-time">11:00 AM</span>
+            <span class="beat-label">Banking & Loans</span>
+          </button>
+          <button type="button" class="btn-beat" data-beat="15:30" aria-label="Car and Insurance">
+            <span class="beat-time">03:30 PM</span>
+            <span class="beat-label">Car & Insurance</span>
+          </button>
+          <button type="button" class="btn-beat" data-beat="20:00" aria-label="Statutory and SIPs">
+            <span class="beat-time">08:00 PM</span>
+            <span class="beat-label">Compounding & SIP</span>
+          </button>
+          <button type="button" class="btn-beat" data-beat="22:30" aria-label="Evening Runway Horizon">
+            <span class="beat-time">10:30 PM</span>
+            <span class="beat-label">Family Horizon</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D Spatial Household Operating System Stage -->
+    <section class="spatial-stage-viewport" id="spatial-viewport">
+      <div class="spatial-os-board" id="spatial-board">
+        <!-- OS Top Control Bar -->
+        <div class="os-top-bar">
+          <div class="family-selector-tabs">
+            <button type="button" class="tab-pill active" data-role="all">Unified Home</button>
+            <button type="button" class="tab-pill" data-role="parent">Father View</button>
+            <button type="button" class="tab-pill" data-role="partner">Mother View</button>
+            <button type="button" class="tab-pill" data-role="senior">Senior Parents</button>
+          </div>
+
+          <div class="household-summary-stats">
+            <div class="summary-metric-group">
+              <div class="summary-label">Next Action</div>
+              <div class="summary-val emerald" id="metric-schedule">Term 2 Fee Due</div>
+            </div>
+            <div class="summary-metric-group">
+              <div class="summary-label">Household Runway</div>
+              <div class="summary-val" id="metric-runway">24.2 Months</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Operational Modules Bento Grid -->
+        <div class="modules-grid">
+          <!-- 1. School & Education Module -->
+          <article class="module-card highlighted" id="module-school" data-roles="parent partner">
+            <div>
+              <div class="module-header">
+                <span class="module-tag tag-school">School & Education</span>
+                <span class="module-status-dot pending" title="Pending Action"></span>
+              </div>
+              <h3 class="module-title">DPS Bangalore — Term 2 Tuition</h3>
+              <p class="module-desc">Class 7 &amp; Class 3 tuition fees auto-parsed from school portal. Bus Fastag auto-replenished at ₹1,000 threshold.</p>
+            </div>
+            <div class="module-data-row">
+              <span class="data-label">Payment Due</span>
+              <span class="data-value">₹78,500 (Due Nov 5)</span>
+            </div>
+          </article>
+
+          <!-- 2. Domestic Staff & Utilities Module -->
+          <article class="module-card" id="module-utilities" data-roles="all parent partner">
+            <div>
+              <div class="module-header">
+                <span class="module-tag tag-utility">Staff & Utilities</span>
+                <span class="module-status-dot" title="Active Mandates"></span>
+              </div>
+              <h3 class="module-title">Domestic Staff &amp; Morning Utilities</h3>
+              <p class="module-desc">Cook, housekeeper, and society maintenance scheduled via UPI AutoPay for the 1st of next month.</p>
+            </div>
+            <div class="module-data-row">
+              <span class="data-label">Scheduled UPI Payouts</span>
+              <span class="data-value">₹32,500 / month</span>
+            </div>
+          </article>
+
+          <!-- 3. Loans & EMI Module -->
+          <article class="module-card" id="module-loans" data-roles="parent partner">
+            <div>
+              <div class="module-header">
+                <span class="module-tag tag-loan">Loans & Debt Engine</span>
+                <span class="module-status-dot" title="Auto-Debit Active"></span>
+              </div>
+              <h3 class="module-title">SBI Green Home Loan</h3>
+              <p class="module-desc">₹64,200 monthly EMI auto-debited on the 5th. Current interest rate: 8.50%. Principal prepayment simulator active.</p>
+            </div>
+            <div class="module-data-row">
+              <span class="data-label">Next EMI Auto-Debit</span>
+              <span class="data-value">₹64,200 (Nov 5)</span>
+            </div>
+          </article>
+
+          <!-- 4. Statutory Accrual & Sovereign Compounding -->
+          <article class="module-card" id="module-statutory" data-roles="parent partner senior">
+            <div>
+              <div class="module-header">
+                <span class="module-tag tag-statutory">Statutory & Sovereign</span>
+                <span class="module-status-dot" title="Compounding Active"></span>
+              </div>
+              <h3 class="module-title">Statutory Compounding Accrual</h3>
+              <p class="module-desc">Combined EPF passbook balance: ₹42.6L at 8.25%. PPF deadline in 5 days to maximize November interest.</p>
+            </div>
+            <div class="module-data-row">
+              <span class="data-label">Sovereign Balance</span>
+              <span class="data-value">₹68,20,000</span>
+            </div>
+          </article>
+
+          <!-- 5. Private Document Vault -->
+          <article class="module-card" id="module-vault" data-roles="all parent partner senior">
+            <div>
+              <div class="module-header">
+                <span class="module-tag tag-vault">Encrypted Vault</span>
+                <span class="module-status-dot" title="Encrypted KMS"></span>
+              </div>
+              <h3 class="module-title">Private Document Vault</h3>
+              <p class="module-desc">School fee receipt PDF dropped into vault. Auto-categorized and indexed in AWS Mumbai private enclave.</p>
+            </div>
+            <div class="module-data-row">
+              <span class="data-label">Vault Status</span>
+              <span class="data-value">42 Encrypted Records</span>
+            </div>
+          </article>
+
+          <!-- 6. AI Household Copilot -->
+          <article class="module-card" id="module-copilot" data-roles="all parent partner">
+            <div>
+              <div class="module-header">
+                <span class="module-tag tag-copilot">Household AI Copilot</span>
+                <span class="module-status-dot" title="Model Online"></span>
+              </div>
+              <h3 class="module-title">Household AI Question of the Day</h3>
+              <p class="module-desc">"Can we upgrade the family SUV without compromising the child’s 2036 BITS/Ivy League college fund?"</p>
+            </div>
+            <div class="module-data-row">
+              <span class="data-label">AI Modeling</span>
+              <span class="data-value">Safe (Surplus: ₹14.8L)</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- AI Real-Time Observation Strip -->
+        <div class="copilot-insight-bar">
+          <span class="copilot-badge">AI INSIGHT</span>
+          <span class="copilot-text" id="copilot-text">
+            DPS Bangalore Term 2 Tuition (₹78,500) due in 4 days. Auto-matched to DPS invoice PDF. Bus Fastag auto-topped up.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founding Household Access & Infrastructure Enclave -->
+    <section class="construction-enclave-wrap" id="founding-reservation">
+      <div class="enclave-grid">
+        <!-- Founding Access Form -->
+        <div class="founding-card">
+          <div class="founding-kicker">Under Private Construction &bull; Cohort 1</div>
+          <h2 class="founding-title">Reserve Founding Household Membership</h2>
+          <p class="founding-desc">
+            We are engineering the production release of ShrewdHQ OS for discerning Indian households. Members get zero-telemetry private enclaves, automated statement parsers, and dedicated concierge onboarding.
+          </p>
+
+          <form class="founding-form" id="founding-form">
+            <input 
+              type="email" 
+              class="founding-input" 
+              id="founding-email" 
+              placeholder="family.lead@domain.com" 
+              required 
+              aria-label="Household Email Address"
+            >
+            <button type="submit" class="btn-reserve-founding">Join Founding Cohort</button>
+          </form>
+
+          <div class="founding-confirmation" id="founding-confirmation">
+            <strong>Reservation Confirmed!</strong><br>
+            Your household is assigned Priority Position <span id="founding-queue-num" style="color: #10b981; font-weight: 800;">#214</span> in Cohort 1. We will reach out as your private enclave is provisioned.
+          </div>
+        </div>
+
+        <!-- Infrastructure Health Ledger -->
+        <div class="infra-ledger-card">
+          <div class="infra-header">
+            <div class="infra-title">Cloud Infrastructure Status</div>
+            <div class="infra-sub">Sovereign India Fabric</div>
+          </div>
+
+          <div class="infra-items">
+            <div class="infra-row">
+              <span class="infra-name"><span>🛡️</span> Data Residency</span>
+              <span class="infra-tag tag-active">AWS ap-south-1 (Mumbai)</span>
+            </div>
+            <div class="infra-row">
+              <span class="infra-name"><span>🌐</span> Global Edge Network</span>
+              <span class="infra-tag tag-active">CloudFront + Clean URLs</span>
+            </div>
+            <div class="infra-row">
+              <span class="infra-name"><span>🔐</span> Document Encryption</span>
+              <span class="infra-tag tag-active">AWS KMS 256-bit AES</span>
+            </div>
+            <div class="infra-row">
+              <span class="infra-name"><span>🤖</span> AI Inference Engine</span>
+              <span class="infra-tag tag-staging">Private VPC Enclave (Q1 2027)</span>
+            </div>
+            <div class="infra-row">
+              <span class="infra-name"><span>📱</span> Mobile &amp; Desktop OS</span>
+              <span class="infra-tag tag-staging">Founding Preview</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Universal Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="brand-wrap">
+          <div class="brand-icon">S</div>
+          <div>
+            <div class="brand-name">ShrewdHQ</div>
+            <div style="font-size: 11px; color: var(--text-tertiary);">The Operating System of the Home</div>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="https://shrewdhq.in">Marketing Site</a>
+          <a href="https://shrewdhq.in/pricing">Pricing &amp; Plans</a>
+          <a href="https://shrewdhq.in/utilities">Household Utilities</a>
+          <a href="https://shrewdhq.in/insights">Financial Insights</a>
+          <a href="https://shrewdhq.in/about">Philosophy</a>
+        </div>
+      </div>
+
+      <div class="footer-disclaimer">
+        <strong>Privacy &amp; Regulatory Notice:</strong> ShrewdHQ is a household operating system and private intelligence layer. ShrewdHQ does not execute transactions directly or store bank account passwords. All parsing and aggregation are executed client-side or within sovereign AWS Mumbai private hardware enclaves under strict zero-telemetry protocols.
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 ShrewdHQ Inc. All rights reserved. Built for the AI era.</div>
+        <div class="aws-tag">CloudFront Edge &bull; ap-south-1</div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="./src/scripts/main.js"></script>
+</body>
+</html>
